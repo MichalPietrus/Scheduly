@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/welcomepage/WelcomePageCss.css}">
+    <link rel="stylesheet" th:href="@{/css/welcomepage/fadein-container.css}">
+    <link rel="stylesheet" th:href="@{/css/commonstyles/Overlay.css}">
+    <link rel="stylesheet" th:href="@{/css/commonstyles/InputGlyphicon.css}">
+    <link rel="stylesheet" th:href="@{/css/commonstyles/ScrollBar.css}">
+    <title>Scheduly</title>
+</head>
+<body>
+
+<div id="page" class="container">
+
+    <!-- Navigation/ Navbar -->
+
+    <header>
+        <nav id="navbar" role="navigation" class="navbar navbar-light navbar-expand-sm row">
+            <div class="col-xl-4">
+                <a class="navbar-brand text-primary" href="/"><img src="img/clock.svg" id="clockLogo" alt="clockLogo">
+                    Scheduly</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse form-inline offset-md-3 offset-lg-4 offset-xl-5 col-8 col-xl-4"
+                 id="navbarSupportedContent">
+                <button id="loginButton" class="btn btn-outline-primary" href="/login">Login</button>
+                <button id="signUpButton" class="btn btn-primary" href="/registration">Sign up</button>
+            </div>
+        </nav>
+    </header>
+
+
+    <div th:if="${param.success}">
+        <div class="alert alert-success col-10" role="alert">
+            Congratulations! Your account has been created
+        </div>
+    </div>
+    <div th:if="${param.logout}">
+        <div class="alert alert-success col-10" role="alert">
+            You have been logged out
+        </div>
+    </div>
+    <div th:if="${param.error}">
+        <div class="alert alert-danger col-10" role="alert">
+            Incorrect username or password
+        </div>
+    </div>
+    <div th:if="${#fields.hasErrors('${user.*}')}">
+        <div class="alert alert-danger col-10" role="alert">
+            Validation error, please try again
+        </div>
+    </div>
+
+
+    <main role="main">
+
+        <!-- Overlay -->
+
+        <div id="overlay"></div>
+
+        <!-- Fading in login/register -->
+
+        <div class="row justify-content-center no-gutters">
+            <div class="fadein-container col-10 col-sm-7 col-md-6 col-lg-5 col-xl-3"
+                 id="loginForm">
+                <a id="loginButtonInForm" class="btn btn-primary left-button-in-fadein-container">Login</a>
+                <a id="signUpButtonInForm" class="btn btn-primary right-button-in-fadein-container">Sign up</a>
+
+                <!-- Login -->
+
+                <form role="form" th:action="@{/}" method="post" id="login" class="form-in-fadein-container">
+                    <p>Please log in if you want to access your dashboard</p>
+
+                    <!-- Username -->
+
+                    <div class="input-group col-11 input-form">
+                        <label class="control-label" for="usernameLogin"></label>
+                        <div class="input-group-prepend">
+                        <span class="input-group-text"><img src="img/user.svg" alt="password"
+                                                            class="glyphicon-icon"></span>
+                        </div>
+                        <input type="text" id="usernameLogin" name="username" class="form-control input-height"
+                               autofocus="autofocus" min="3"
+                               placeholder="Username" required/>
+                    </div>
+
+                    <!-- Password -->
+
+                    <div class="input-group col-11 input-form">
+                        <label for="passwordLogin"></label>
+                        <div class="input-group-prepend">
+                        <span class="input-group-text"><img src="img/login.svg" alt="password"
+                                                            class="glyphicon-icon"></span>
+                        </div>
+                        <input type="password" id="passwordLogin" name="password" class="form-control input-height"
+                               placeholder="Password" minlength="5" required/>
+                    </div>
+
+                    <!-- Submit button -->
+
+                    <div class="form-group form-submit-button">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-8">
+                                <input type="submit" name="login-submit" id="login-submit"
+                                       class="form-control btn btn-primary" value="Log In"/>
+                            </div>
+                        </div>
+                    </div>
+                </form> <!-- End of login form -->
+
+                <!-- Registration -->
+
+                <form role="form" th:action="@{/registration}" id="registration" th:object="${user}" class="form-in-fadein-container" method="post">
+                    <p>Sign up and start saving your time with our application today!</p>
+                    <p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+                       th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
+                        error</p>
+
+                    <!-- Username -->
+
+                    <div class="input-group col-11 input-form"
+                         th:classappend="${#fields.hasErrors('username')}? 'has-error':''">
+                        <label for="username" class="control-label"></label>
+                        <div class="input-group-prepend">
+                        <span class="input-group-text"><img src="img/user.svg" alt="username"
+                                                            class="glyphicon-icon"></span>
+                        </div>
+                        <input id="username" class="form-control" minlength="3" th:field="*{username}"
+                               placeholder="Username" required/>
+                        <p class="error-message" th:each="error : ${#fields.errors('username')}" th:text="${error}">
+                            Validation error</p>
+                    </div>
+
+                    <!-- Email -->
+
+                    <div class="input-group col-11 input-form"
+                         th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+                        <label for="email" class="control-label"></label>
+                        <div class="input-group-prepend">
+                        <span class="input-group-text"><img src="img/email.svg" alt="email"
+                                                            class="glyphicon-icon"></span>
+                        </div>
+                        <input id="email" class="form-control" th:field="*{email}" placeholder="E-mail" required/>
+                        <p class="error-message" th:each="error : ${#fields.errors('email')}" th:text="${error}"></p>
+                    </div>
+
+                    <!-- Password -->
+
+                    <div class="input-group col-11 input-form"
+                         th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+                        <label for="password" class="control-label"></label>
+                        <div class="input-group-prepend">
+                        <span class="input-group-text"><img src="img/login.svg" alt="password"
+                                                            class="glyphicon-icon"></span>
+                        </div>
+                        <input id="password" class="form-control" type="password" th:field="*{password}"
+                               placeholder="Password" min="8" required/>
+                        <p class="error-message" th:each="error : ${#fields.errors('password')}" th:text="${error}">
+                            Validation error</p>
+                    </div>
+                    <div class="form-group form-submit-button">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-8">
+                                <button type="submit" class="form-control btn btn-primary">Create account</button>
+                            </div>
+                        </div>
+                    </div>
+                </form> <!-- End of registration form -->
+
+            </div> <!-- End of login/registration form -->
+
+        </div> <!-- End of row -->
+
+
+        <div id="mainContent" class="row">
+            <div id="shortText" class="col-10 col-lg-4 align-self-center">
+                <p class="core-title">Boost your productivity.</p>
+                <p class="description">Start using our app today, organize your day and projects</p>
+                <button id="getStartedButton" type="button" class="btn btn-primary navbar-button">Get started &nbsp; >
+                </button>
+            </div>
+            <div id="sitePresentation" class="col-12 col-lg-7"></div>
+        </div>
+    </main>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+<script th:src="@{/js/showLoginRegisterForm.js}">
+</script>
+</body>
+</html>
