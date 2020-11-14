@@ -22,5 +22,25 @@ tbody tr {
     height: 49px!important;
 }
 .option-select-cell {
-    max-width: 63px;
+    min-width: 130px!important;
+}
+.edit-icon {
+    height: 20px;
+    width: 20px;
+    margin-left: 20px;
+    display: none;
+}
+.edit-icon-button {
+     display: none;
+ }
+.edit-icon-button,
+.edit-icon-button:active,
+.edit-icon-button:hover,
+.edit-icon-button:focus,
+.edit-icon{
+    background-color: rgba(242,246,248,0.1);
+    border: 0 none;
+    outline: none;
+    box-shadow: none;
+    padding: 0;
 }

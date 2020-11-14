@@ -1,6 +1,6 @@
 .fadein-container{
     margin-top: 50px;
-    position: absolute;
+    position: fixed;
     background: white;
     z-index: 100;
     display: none;

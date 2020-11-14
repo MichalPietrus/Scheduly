@@ -1,6 +1,6 @@
 .fadein-container{
     margin-top: 50px;
-    position: absolute;
+    position: fixed;
     background: white;
     z-index: 100;
     display: none;
@@ -116,24 +116,6 @@ form .form-control:focus{
     width: 90%;
     margin: 10px 0 10px 10px;
 }
-.option-orange {
-    background-color: rgb(253,171,61)!important;
-}
-.option-green {
-    background-color: rgb(0,200,117)!important;
-}
-.option-red {
-    background-color: rgb(226,68,92)!important;
-}
-.option-pink {
-    background-color: rgb(255,90,196)!important;
-}
-.option-blue {
-    background-color: rgb(87,155,252)!important;
-}
-.option-purple {
-    background-color: rgb(120,75,209)!important;
-}
 @media (max-width: 458px){
     #priority,#status {
         width: 90%;
@@ -202,13 +184,13 @@ form .form-control:focus{
     box-shadow: none;
 }
 #addTaskFooter {
-    background-color: rgb(248,248,248);
-    border-bottom: rgb(238,238,238) 1px solid;
-    height: 45px;
+    background-color: rgb(248,248,246);
+    border-bottom: rgb(238,238,236) 1px solid;
+    height: 60px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
     margin-top: 15px;
-    padding-bottom: 20px;
+    align-items: center;
 }
 #descriptionTextArea {
     width: 100%;
@@ -219,10 +201,64 @@ form .form-control:focus{
     border-bottom-left-radius: 20px;
     padding-bottom: 20px;
 }
-#createTaskButton {
-    align-self: center;
-    background-color: rgb(147,185,244);
+#createTaskButton,
+#edit-task-button {
+    background-color: rgb(147,185,242);
+}
+#createTaskButton:focus,
+#createTaskButton:active,
+#createTaskButton:hover,
+#delete-task-button:focus,
+#delete-task-button:active,
+#delete-task-button:hover,
+#edit-task-button:focus,
+#edit-task-button:active,
+#edit-task-button:hover {
+    border-bottom-color: rgb(147,185,242);
 }
 #addTaskFooter > div > .row {
     padding-top: 4px;
+}
+.form-submit-button {
+    margin-bottom: 0;
+    padding-top: 8px;
+}
+#delete-task-button {
+    background-color: rgb(230,90,63);
+    margin-left: 20px;
+}
+#edit-task-button {
+    margin-left: 15px;
+}
+.modal-body p {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+}
+.modal-header {
+
+}
+.modal-footer {
+    justify-content: space-between;
+}
+#accept-delete-button  {
+    background-color: rgb(230,90,63);
+}
+.option-orange {
+    background-color: rgb(253,171,61)!important;
+}
+.option-green {
+    background-color: rgb(0,200,117)!important;
+}
+.option-red {
+    background-color: rgb(226,68,92)!important;
+}
+.option-pink {
+    background-color: rgb(255,90,196)!important;
+}
+.option-blue {
+    background-color: rgb(87,155,252)!important;
+}
+.option-purple {
+    background-color: rgb(120,75,209)!important;
 }

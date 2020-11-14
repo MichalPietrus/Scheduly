@@ -35,4 +35,17 @@ public class Task {
     @JsonBackReference
     private User user;
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", priority=" + priority +
+                ", sequence=" + sequence +
+                '}';
+    }
 }

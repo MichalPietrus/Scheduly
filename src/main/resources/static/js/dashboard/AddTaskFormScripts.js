@@ -1,21 +1,68 @@
+function dropdownSelection($dropdownButton,$dropdownToggle) {
+    $($dropdownToggle).on('click touchstart', function(){
+        $dropdownButton.html($(this).html());
+        if($(this).parents('.dropdown').hasClass('status')) {
+            swapClass($dropdownButton, $(this), 'option-orange', 'option-green', 'option-red')
+            swapClass($dropdownButton, $(this), 'option-green', 'option-orange', 'option-red')
+            swapClass($dropdownButton, $(this), 'option-red', 'option-green', 'option-orange')
+        } else {
+            swapClass($dropdownButton, $(this), 'option-pink', 'option-blue', 'option-purple')
+            swapClass($dropdownButton, $(this), 'option-blue', 'option-pink', 'option-purple')
+            swapClass($dropdownButton, $(this), 'option-purple', 'option-blue', 'option-pink')
+        }
+    });
+}
+
+function swapClass($dropdownButton,$option,addClass, removeClass, removeClassTwo) {
+    if($option.hasClass(addClass)){
+        $dropdownButton.addClass(addClass);
+        $dropdownButton.removeClass(removeClass);
+        $dropdownButton.removeClass(removeClassTwo);
+    }
+}
+
+function hideContainer() {
+    let $descriptionContainer = $('.description-container');
+    let $fadeinContainer = $('.fadein-container');
+    let $overlay = $('#overlay');
+    $fadeinContainer.stop(true, true).fadeTo(700, 0);
+    $overlay.removeClass('overlay');
+    $('body').removeClass('stop-scrolling')
+    $fadeinContainer.hide();
+    $descriptionContainer.animate({width: 'hide'}, 350);
+}
+
+
+
+
 /* Displays Add Task Form after clicking the button*/
 
 $(function () {
     let $addTaskButton = $('#addTaskButton');
     let $fadeinContainer = $('.fadein-container');
-    let $login = $('#addTaskForm');
     let $overlay = $('#overlay');
-    $addTaskButton.on('click', function (e) {
+    let $createTaskButtonForm = $('#createTaskButtonForm')
+    let $deleteAndEditTaskButtonsForm = $('#delete-and-edit-task-buttons-form');
+    $addTaskButton.on('click touchstart', function (e) {
+        let $priorityDropdownButton =  $('#priorityDropdownButton');
+        let $statusDropdownButton = $('#statusDropdownButton');
+        $('#taskTitle').val('');
+        $('#fromDate').val('');
+        $('#toDate').val('');
+        $('#descriptionTextArea').val('');
+        $priorityDropdownButton.removeClass("option-pink option-blue option-purple")
+        $priorityDropdownButton.text('Priority');
+        $statusDropdownButton.removeClass("option-green option-orange option-red")
+        $statusDropdownButton.text('Status');
+        $('#description').text('Add a Description >');
         $overlay.addClass('overlay');
-        if (e.target.id === $addTaskButton.attr('id')) {
-            $login.addClass('activate');
-        } else {
-            $login.removeClass('activate');
-        }
+        $('body').addClass('stop-scrolling')
         $fadeinContainer.stop(true, true).fadeTo(700, 1);
         $fadeinContainer.show();
+        $createTaskButtonForm.show();
+        $deleteAndEditTaskButtonsForm.hide();
     });
-    $('body').on('click', function (e) {
+    $('body').on('click touchstart', function (e) {
         let $descriptionContainer = $('.description-container');
         let isAddTaskButton = e.target.id !== $addTaskButton.attr('id');
         let isFadeInContainer = e.target.id !== $fadeinContainer.attr('id');
@@ -24,6 +71,7 @@ $(function () {
         if (isAddTaskButton && isFadeInContainer && !hasParentFadeInContainer && !isNotDescriptionBox) {
             $fadeinContainer.stop(true, true).fadeTo(700, 0);
             $overlay.removeClass('overlay');
+            $('body').removeClass('stop-scrolling')
             $fadeinContainer.hide();
             $descriptionContainer.animate({width:'hide'},350);
         }
@@ -37,32 +85,9 @@ $(function() {
     let $priorityDropdownButton = $('#priorityDropdownButton');
     let $statusDropdownToggle = $('#statusDropdownMenu button');
     let $priorityDropdownToggle = $('#priorityDropdownMenu button');
-
     dropdownSelection($statusDropdownButton,$statusDropdownToggle);
     dropdownSelection($priorityDropdownButton,$priorityDropdownToggle);
 });
-
-function dropdownSelection($dropdownButton,$dropdownToggle) {
-    $($dropdownToggle).on('click', function(){
-        $dropdownButton.html($(this).html());
-        if($(this).parents('.dropdown').hasClass('status')) {
-            swapClass($dropdownButton, $(this), 'option-orange', 'option-green', 'option-red')
-            swapClass($dropdownButton, $(this), 'option-green', 'option-orange', 'option-red')
-            swapClass($dropdownButton, $(this), 'option-red', 'option-green', 'option-orange')
-        } else {
-            swapClass($dropdownButton, $(this), 'option-pink', 'option-blue', 'option-purple')
-            swapClass($dropdownButton, $(this), 'option-blue', 'option-pink', 'option-purple')
-            swapClass($dropdownButton, $(this), 'option-purple', 'option-blue', 'option-pink')
-        }
-    });
-}
-function swapClass($dropdownButton,$option,addClass, removeClass, removeClassTwo) {
-    if($option.hasClass(addClass)){
-        $dropdownButton.addClass(addClass);
-        $dropdownButton.removeClass(removeClass);
-        $dropdownButton.removeClass(removeClassTwo);
-    }
-}
 
 $(function () {
 
@@ -75,7 +100,7 @@ $(function () {
         let $descriptionTextArea = $('#descriptionTextArea').val();
        let fadeInContainerHeight = $fadeinContainer.css('height');
        $descriptionContainer.css('height',fadeInContainerHeight);
-       $descriptionContainer.toggle("slide",750);
+       $descriptionContainer.toggle("slide",500);
        $fadeinContainer.toggle();
        $description.text($descriptionTextArea)
    })
@@ -95,7 +120,7 @@ $(function () {
 */
 
 $(function () {
-    $('#createTaskButton').on('click submit',function (e){
+    $('#createTaskButton').on('click submit touchstart',function (e){
         let $taskTitle = $('#taskTitle').val();
         let $fromDate = $('#fromDate').val();
         let $toDate = $('#toDate').val()
@@ -123,7 +148,9 @@ $(function () {
                 contentType: "application/json",
                 data: JSON.stringify(Task)
             }).done(function (data) {
+                hideContainer();
                 console.log(data)
+                showTableTasksElements(data,e)
             }).fail(function (data){
                console.log(data)
             });

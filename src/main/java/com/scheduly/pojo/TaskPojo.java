@@ -1,7 +1,5 @@
 package com.scheduly.pojo;
 
-import com.scheduly.enums.Priority;
-import com.scheduly.enums.Status;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -2,14 +2,19 @@ package com.scheduly.web.rest;
 
 import com.scheduly.model.Task;
 import com.scheduly.model.User;
-import com.scheduly.pojo.DropdownSelectedData;
 import com.scheduly.pojo.TaskPojo;
+import com.scheduly.pojo.SequenceTablePojo;
 import com.scheduly.service.TaskService;
 import com.scheduly.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/task")
@@ -25,7 +30,7 @@ public class TaskController {
     }
 
     @PostMapping("/save")
-    public Task saveTask(@RequestBody TaskPojo task, Principal principal) {
+    public List<Task> saveTask(@RequestBody TaskPojo task, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         Task taskModel = new Task();
         taskModel.setTitle(task.getTitle());
@@ -42,7 +47,10 @@ public class TaskController {
             taskModel.setSequence(taskService.findTaskByHighestSequence().getSequence() + 1);
         else
             taskModel.setSequence(1);
-        return taskService.saveTask(taskModel);
+        taskService.saveTask(taskModel);
+        List<Task> list = new ArrayList<>();
+        list.add(taskModel);
+        return list;
     }
 
     @PatchMapping("/update-dropdown-selected-data")
@@ -59,10 +67,64 @@ public class TaskController {
         return taskService.saveTask(taskToUpdate);
     }
 
-    @GetMapping("/get-all")
-    public List<Task> findAllTasks() {
-        return taskService.findAllTasks();
+    @GetMapping("/get-first-15")
+    public List<Task> findFirst15Tasks() {
+        return taskService.findTop15ByOrderBySequenceDesc();
     }
+
+    @GetMapping("/get-on-scroll")
+    public List<Task> findTasksOnScroll(@RequestParam String lastRowSequence) {
+        return taskService.findFirstLowerElementThan(Long.parseLong(lastRowSequence));
+    }
+
+    @GetMapping("/get-task-by-sequence")
+    public Task findTaskById(@RequestParam String tableRowId) {
+        return taskService.findBySequence(Long.parseLong(tableRowId));
+    }
+
+    @DeleteMapping("/delete-task")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteTaskBySequence(@RequestParam String tableRowId) {
+        taskService.removeBySequence(Long.parseLong(tableRowId));
+        taskService.updateSequenceAfterDelete(Long.parseLong(tableRowId));
+    }
+
+    @PatchMapping("/edit")
+    public List<Task> editTask(@RequestBody TaskPojo task) {
+        Task taskFromDatabase = taskService.findBySequence(task.getSequence());
+        taskFromDatabase.setTitle(task.getTitle());
+        taskFromDatabase.setFromDate(task.getFromDate());
+        taskFromDatabase.setToDate(task.getToDate());
+        taskService.setPriority(task.getPriority(),taskFromDatabase);
+        taskService.setStatus(task.getStatus(),taskFromDatabase);
+        taskFromDatabase.setDescription(task.getDescription());
+        taskService.saveTask(taskFromDatabase);
+        List<Task> list = new ArrayList<>();
+        list.add(taskFromDatabase);
+        return list;
+    }
+
+    @GetMapping("/search")
+    public List<Task> findTaskByKeyword(@RequestParam String keyword) {
+        return taskService.findAllTasksByKeyword(keyword);
+    }
+
+    @PostMapping("/save-sequence")
+    public List<Task> saveTasksSequenceAfterDropdown(@RequestBody SequenceTablePojo test) {
+        List<Long> sequenceTable = Arrays.stream(test.getSequenceTable()).map(Long::parseLong).collect(Collectors.toList());
+        List<Task> tasksList = new ArrayList<>();
+        List<Long> sortedTable = new ArrayList<>(sequenceTable);
+        for (Long item: sequenceTable) {
+            tasksList.add(taskService.findBySequence(item));
+        }
+        sortedTable.sort(Collections.reverseOrder());
+        for(int i = 0; i < tasksList.size(); i++) {
+            tasksList.get(i).setSequence(sortedTable.get(i));
+            taskService.saveTask(tasksList.get(i));
+        }
+        return tasksList;
+    }
+
 
 }
 
