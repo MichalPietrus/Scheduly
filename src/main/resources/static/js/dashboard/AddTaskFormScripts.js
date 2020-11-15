@@ -41,28 +41,14 @@ $(function () {
     let $addTaskButton = $('#addTaskButton');
     let $fadeinContainer = $('.fadein-container');
     let $overlay = $('#overlay');
-    let $createTaskButtonForm = $('#createTaskButtonForm')
-    let $deleteAndEditTaskButtonsForm = $('#delete-and-edit-task-buttons-form');
     $addTaskButton.on('click touchstart', function (e) {
         let $priorityDropdownButton =  $('#priorityDropdownButton');
         let $statusDropdownButton = $('#statusDropdownButton');
-        $('#taskTitle').val('');
         $('#fromDate').val('');
         $('#toDate').val('');
-        $('#descriptionTextArea').val('');
-        $priorityDropdownButton.removeClass("option-pink option-blue option-purple")
-        $priorityDropdownButton.text('Priority');
-        $statusDropdownButton.removeClass("option-green option-orange option-red")
-        $statusDropdownButton.text('Status');
-        $('#description').text('Add a Description >');
-        $overlay.addClass('overlay');
-        $('body').addClass('stop-scrolling')
-        $fadeinContainer.stop(true, true).fadeTo(700, 1);
-        $fadeinContainer.show();
-        $createTaskButtonForm.show();
-        $deleteAndEditTaskButtonsForm.hide();
+        showAddTaskForm($priorityDropdownButton,$statusDropdownButton)
     });
-    $('body').on('click touchstart', function (e) {
+    $('body').on('mousedown touchstart', function (e) {
         let $descriptionContainer = $('.description-container');
         let isAddTaskButton = e.target.id !== $addTaskButton.attr('id');
         let isFadeInContainer = e.target.id !== $fadeinContainer.attr('id');
@@ -120,7 +106,7 @@ $(function () {
 */
 
 $(function () {
-    $('#createTaskButton').on('click submit touchstart',function (e){
+    $('.create-task-button-dashboard').on('click submit touchstart',function (e){
         let $taskTitle = $('#taskTitle').val();
         let $fromDate = $('#fromDate').val();
         let $toDate = $('#toDate').val()
@@ -150,7 +136,9 @@ $(function () {
             }).done(function (data) {
                 hideContainer();
                 console.log(data)
-                showTableTasksElements(data,e)
+                if(e.target.classList.contains('dashboard')) {
+                    showTableTasksElements(data, e)
+                }
             }).fail(function (data){
                console.log(data)
             });
@@ -175,3 +163,23 @@ $(function () {
   });
 
 });
+
+function showAddTaskForm($priorityDropdownButton, $statusDropdownButton) {
+    let $createTaskButtonForm = $('#createTaskButtonForm')
+    let $deleteAndEditTaskButtonsForm = $('#delete-and-edit-task-buttons-form');
+    let $fadeinContainer = $('.fadein-container');
+    let $overlay = $('#overlay');
+    $('#taskTitle').val('');
+    $('#descriptionTextArea').val('');
+    $priorityDropdownButton.removeClass("option-pink option-blue option-purple")
+    $priorityDropdownButton.text('Priority');
+    $statusDropdownButton.removeClass("option-green option-orange option-red")
+    $statusDropdownButton.text('Status');
+    $('#description').text('Add a Description >');
+    $overlay.addClass('overlay');
+    $('body').addClass('stop-scrolling')
+    $fadeinContainer.stop(true, true).fadeTo(700, 1);
+    $fadeinContainer.show();
+    $createTaskButtonForm.show();
+    $deleteAndEditTaskButtonsForm.hide();
+}

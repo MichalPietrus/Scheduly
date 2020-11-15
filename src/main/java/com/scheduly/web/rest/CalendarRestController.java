@@ -2,11 +2,10 @@ package com.scheduly.web.rest;
 
 import com.scheduly.model.Task;
 import com.scheduly.pojo.TaskCalendarFormat;
+import com.scheduly.pojo.TaskPojo;
 import com.scheduly.service.TaskService;
-import com.scheduly.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +16,8 @@ public class CalendarRestController {
 
     private final TaskService taskService;
 
-    private final UserService userService;
-
-    public CalendarRestController(TaskService taskService, UserService userService) {
+    public CalendarRestController(TaskService taskService) {
         this.taskService = taskService;
-        this.userService = userService;
     }
 
     @GetMapping("/get-all-events")
@@ -30,16 +26,62 @@ public class CalendarRestController {
         List<TaskCalendarFormat> tasksCalendarFormatList = new ArrayList<>();
         List<Task> tasksFromDatabase = taskService.findAllTasks();
 
-        for (Task task:tasksFromDatabase) {
+        for (Task task : tasksFromDatabase) {
             TaskCalendarFormat taskCalendarFormat = new TaskCalendarFormat();
             taskCalendarFormat.setId(task.getId());
             taskCalendarFormat.setTitle(task.getTitle());
             taskCalendarFormat.setStart(task.getFromDate().toString());
             taskCalendarFormat.setEnd(task.getToDate().toString());
+            switch (task.getPriority()) {
+                case LOW:
+                    taskCalendarFormat.setColor("rgb(255, 90, 196)");
+                    break;
+                case MEDIUM:
+                    taskCalendarFormat.setColor("rgb(87,155,252)");
+                    break;
+                case HIGH:
+                    taskCalendarFormat.setColor("rgb(120,75,209)");
+                    break;
+            }
             tasksCalendarFormatList.add(taskCalendarFormat);
         }
 
         return tasksCalendarFormatList;
+    }
+
+    @GetMapping("/get-task-by-id")
+    public Task getTaskById(@RequestParam long elementId) {
+        return taskService.findTaskById(elementId);
+    }
+
+    @DeleteMapping("/delete-task")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteTaskById(@RequestParam long elementId) {
+        long tableRowId = taskService.findTaskById(elementId).getSequence();
+        taskService.removeById(elementId);
+        taskService.updateSequenceAfterDelete(tableRowId);
+    }
+
+    @PatchMapping("/edit")
+    public Task editTask(@RequestBody TaskPojo taskPojo) {
+        Task taskFromDatabase = taskService.findTaskById(taskPojo.getId());
+        taskFromDatabase.setTitle(taskPojo.getTitle());
+        taskFromDatabase.setDescription(taskPojo.getDescription());
+        taskFromDatabase.setFromDate(taskPojo.getFromDate());
+        taskFromDatabase.setToDate(taskPojo.getToDate());
+        taskService.setStatus(taskPojo.getStatus(), taskFromDatabase);
+        taskService.setPriority(taskPojo.getPriority(), taskFromDatabase);
+        return taskService.saveTask(taskFromDatabase);
+    }
+
+    @PatchMapping("/save-position-on-drop")
+    public Task savePositionOnDrop(@RequestBody TaskPojo taskPojo) {
+        Task taskFromDatabase = taskService.findTaskById(taskPojo.getId());
+        System.out.println(taskPojo.getFromDate());
+        System.out.println(taskPojo.getToDate());
+        taskFromDatabase.setFromDate(taskPojo.getFromDate());
+        taskFromDatabase.setToDate(taskPojo.getToDate());
+        return taskService.saveTask(taskFromDatabase);
     }
 
 

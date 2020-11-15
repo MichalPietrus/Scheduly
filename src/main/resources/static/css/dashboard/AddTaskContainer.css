@@ -142,7 +142,7 @@ form .form-control:focus{
 }
 .description-container{
     margin-top: 50px;
-    position: absolute;
+    position: fixed;
     background: white;
     z-index: 150;
     display: none;
@@ -254,7 +254,7 @@ form .form-control:focus{
     background-color: rgb(226,68,92)!important;
 }
 .option-pink {
-    background-color: rgb(255,90,196)!important;
+    background-color: rgb(255, 90, 196) !important;
 }
 .option-blue {
     background-color: rgb(87,155,252)!important;

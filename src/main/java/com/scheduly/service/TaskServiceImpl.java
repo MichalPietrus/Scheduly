@@ -87,5 +87,10 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findAllTasksByKeyword(keyword);
     }
 
+    @Override
+    public void removeById(long id) {
+        taskRepository.deleteById(id);
+    }
+
 
 }

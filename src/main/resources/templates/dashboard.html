@@ -9,6 +9,7 @@
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" th:href="@{/img/clock.svg}">
     <link rel="stylesheet" th:href="@{css/jquery-ui.min.css}">
     <link rel="stylesheet" th:href="@{/css/commonstyles/MainNavbar.css}">
     <link rel="stylesheet" th:href="@{/css/dashboard/DashboardMainContent.css}">
@@ -42,7 +43,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/projects" class="nav-link">
                     <img src="img/projects-icon.svg" alt="projects"/>
                     <span class="link-text">Projects</span>
                 </a>
@@ -193,7 +194,7 @@
                     <div id="createTaskButtonForm" class="form-group form-submit-button">
                         <div class="row justify-content-center">
                             <div class="col-8">
-                                <input type="submit" id="createTaskButton" class="form-control btn btn-primary"
+                                <input type="submit" id="createTaskButton" class="create-task-button-dashboard form-control btn btn-primary"
                                        value="Create"/>
                             </div>
                         </div>

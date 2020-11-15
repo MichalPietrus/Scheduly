@@ -376,6 +376,8 @@ $(function () {
 
 })
 
+/* Allows drag and drop and also actualize the sequence after drop */
+
 $(function () {
     $('tbody').sortable({
         axis: 'y',
@@ -396,7 +398,6 @@ $(function () {
                 contentType: "application/json",
                 data: JSON.stringify(Test)
             }).done(function (data) {
-                console.log(data)
             }).fail(function (data){
                 console.log(data)
             });

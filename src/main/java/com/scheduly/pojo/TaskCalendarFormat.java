@@ -12,5 +12,6 @@ public class TaskCalendarFormat {
     String title;
     String start;
     String end;
+    String color;
 
 }

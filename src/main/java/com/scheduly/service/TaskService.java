@@ -32,4 +32,7 @@ public interface TaskService {
 
     List<Task> findAllTasksByKeyword(String keyword);
 
+    void removeById(long id);
+
+
 }
