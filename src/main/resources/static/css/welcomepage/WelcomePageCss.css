@@ -1,39 +1,47 @@
 body {
     background-color: #F2F6F8;
 }
+
 .navbar-brand {
     font-size: 42px;
     font-family: 'Work Sans', sans-serif;
 }
+
 button {
     float: right;
     width: 140px;
     margin: 10px;
 }
+
 .core-title {
     font-size: 42px;
     line-height: 60px;
     font-weight: 700;
     font-family: 'Roboto', sans-serif;
 }
+
 #clockLogo {
     width: 36px;
     height: 36px;
     margin-bottom: 7px;
 }
+
 .description {
     font-size: 20px;
     font-weight: 400;
     line-height: 32px;
     font-family: 'Roboto', sans-serif;
 }
+
 #mainContent {
     margin-top: 75px;
 }
+
 #sitePresentation {
     border: 10px solid black;
     border-radius: 10px;
 }
+
 #getStartedButton {
     margin-left: 0;
     width: 240px;
@@ -45,30 +53,36 @@ button {
     line-height: 32px;
     font-family: 'Roboto', sans-serif;
 }
+
 #page {
-    width: 100%!important;
+    width: 100% !important;
     max-width: 1300px;
 }
+
 .alert {
     margin: 0 auto;
 }
+
 @media (min-width: 992px) {
     #shortText {
         margin-left: 50px;
     }
 }
-@media (max-width: 768px){
+
+@media (max-width: 768px) {
     #page {
-        margin: 0 0 0 10px!important;
+        margin: 0 0 0 10px !important;
         padding: 0;
     }
 }
-@media (max-width: 353px){
+
+@media (max-width: 353px) {
     #page {
         margin: 0 0 0 5px;
         padding: 0;
     }
 }
+
 .alert {
     text-align: center;
     margin-top: 25px;

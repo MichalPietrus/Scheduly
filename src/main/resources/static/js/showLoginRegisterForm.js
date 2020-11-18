@@ -23,7 +23,7 @@ $(function () {
         $loginForm.stop(true, true).fadeTo(700, 1);
         $loginForm.show();
     });
-    $('body').on('click', function (e) {
+    $('body').on('mousedown touchstart', function (e) {
         let isNotLoginButton = e.target.id !== $loginButton.attr('id');
         let isNotSignUpButton = e.target.id !== $signUpButton.attr('id');
         let isNotLoginForm = e.target.id !== $loginForm.attr('id');

@@ -2,18 +2,32 @@
 .inner-addon {
     position: relative;
 }
+
 /* style icon */
 .inner-addon .glyphicon {
     position: absolute;
     padding: 10px;
     pointer-events: none;
 }
+
 /* align icon */
-.left-addon .glyphicon  { left:  0;}
-.right-addon .glyphicon { right: 0;}
+.left-addon .glyphicon {
+    left: 0;
+}
+
+.right-addon .glyphicon {
+    right: 0;
+}
+
 /* add padding  */
-.left-addon input  { padding-left:  30px; }
-.right-addon input { padding-right: 30px; }
+.left-addon input {
+    padding-left: 30px;
+}
+
+.right-addon input {
+    padding-right: 30px;
+}
+
 .glyphicon-icon {
     width: 20px;
     height: 20px;

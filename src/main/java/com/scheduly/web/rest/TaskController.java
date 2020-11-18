@@ -2,8 +2,8 @@ package com.scheduly.web.rest;
 
 import com.scheduly.model.Task;
 import com.scheduly.model.User;
-import com.scheduly.pojo.TaskPojo;
 import com.scheduly.pojo.SequenceTablePojo;
+import com.scheduly.pojo.TaskPojo;
 import com.scheduly.service.TaskService;
 import com.scheduly.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -43,7 +43,7 @@ public class TaskController {
         taskModel.setToDate(task.getToDate());
         taskModel.setUser(user);
         Task highestSequenceTask = taskService.findTaskByHighestSequence();
-        if(highestSequenceTask != null)
+        if (highestSequenceTask != null)
             taskModel.setSequence(taskService.findTaskByHighestSequence().getSequence() + 1);
         else
             taskModel.setSequence(1);
@@ -59,10 +59,10 @@ public class TaskController {
         long tableRowId = dropdownSelectedData.getSequence();
         Task taskToUpdate = taskService.findBySequence(tableRowId);
 
-        if(selectedOption.equals("LOW") || selectedOption.equals("MEDIUM") || selectedOption.equals("HIGH"))
-            taskService.setPriority(selectedOption,taskToUpdate);
+        if (selectedOption.equals("LOW") || selectedOption.equals("MEDIUM") || selectedOption.equals("HIGH"))
+            taskService.setPriority(selectedOption, taskToUpdate);
         else
-            taskService.setStatus(selectedOption,taskToUpdate);
+            taskService.setStatus(selectedOption, taskToUpdate);
 
         return taskService.saveTask(taskToUpdate);
     }
@@ -95,8 +95,8 @@ public class TaskController {
         taskFromDatabase.setTitle(task.getTitle());
         taskFromDatabase.setFromDate(task.getFromDate());
         taskFromDatabase.setToDate(task.getToDate());
-        taskService.setPriority(task.getPriority(),taskFromDatabase);
-        taskService.setStatus(task.getStatus(),taskFromDatabase);
+        taskService.setPriority(task.getPriority(), taskFromDatabase);
+        taskService.setStatus(task.getStatus(), taskFromDatabase);
         taskFromDatabase.setDescription(task.getDescription());
         taskService.saveTask(taskFromDatabase);
         List<Task> list = new ArrayList<>();
@@ -114,11 +114,11 @@ public class TaskController {
         List<Long> sequenceTable = Arrays.stream(test.getSequenceTable()).map(Long::parseLong).collect(Collectors.toList());
         List<Task> tasksList = new ArrayList<>();
         List<Long> sortedTable = new ArrayList<>(sequenceTable);
-        for (Long item: sequenceTable) {
+        for (Long item : sequenceTable) {
             tasksList.add(taskService.findBySequence(item));
         }
         sortedTable.sort(Collections.reverseOrder());
-        for(int i = 0; i < tasksList.size(); i++) {
+        for (int i = 0; i < tasksList.size(); i++) {
             tasksList.get(i).setSequence(sortedTable.get(i));
             taskService.saveTask(tasksList.get(i));
         }

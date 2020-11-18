@@ -16,13 +16,13 @@ $(function () {
 
     /* On title-column hover show edit task icon */
 
-    $tbody.on('mouseenter','.task-title',function () {
+    $tbody.on('mouseenter', '.task-title', function () {
         let $editIconButton = $(this).children('.edit-icon-button');
         let $editIcon = $editIconButton.children('.edit-icon');
         $editIconButton.show();
         $editIcon.show();
     })
-    $tbody.on('mouseleave','.task-title',function () {
+    $tbody.on('mouseleave', '.task-title', function () {
         let $editIconButton = $(this).children('.edit-icon-button');
         let $editIcon = $editIconButton.children('.edit-icon');
         $editIconButton.hide();
@@ -31,7 +31,7 @@ $(function () {
 
     /* On edit fills the field with data from database and displays the edit task container */
 
-    $tbody.on('click touchend','.edit-icon-button', function () {
+    $tbody.on('click touchend', '.edit-icon-button', function () {
         tableRowId = $(this).parents('tr').attr('id').toString().split('_')[1];
         let $fadeinContainer = $('.fadein-container');
         let $overlay = $('#overlay');
@@ -100,7 +100,7 @@ $(function () {
     $editTaskButton.on('click submit touchend', function (e) {
         let priorityChecked = $priorityDropdownButton.text().toString().trim().toUpperCase() === ('PRIORITY' || '');
         let statusChecked = $statusDropdownButton.text().toString().trim().toUpperCase() === ('STATUS' || '');
-        if($(this).closest('form')[0].checkValidity() && '' !== $taskTitle.val()
+        if ($(this).closest('form')[0].checkValidity() && '' !== $taskTitle.val()
             && '' !== $fromDate.val()
             && '' !== $toDate.val()
             && !priorityChecked
@@ -121,9 +121,9 @@ $(function () {
                 contentType: "application/json",
                 data: JSON.stringify(Task)
             }).done(function (data) {
-                showTableTasksElements(data,e)
+                showTableTasksElements(data, e)
                 hideContainer();
-            }).fail(function (data){
+            }).fail(function (data) {
                 console.log(data)
             });
         }
@@ -147,10 +147,10 @@ $(function () {
 
             $('#item_' + tableRowId).remove();
             $('tr').each(function () {
-                if($(this).attr('id')) {
+                if ($(this).attr('id')) {
                     if (parseInt($(this).attr('id').toString().split("_")[1]) > tableRowId) {
                         let thisRowId = parseInt($(this).attr('id').toString().split("_")[1]) - 1;
-                        $(this).attr('id','item_' + thisRowId);
+                        $(this).attr('id', 'item_' + thisRowId);
                     }
                 }
             })

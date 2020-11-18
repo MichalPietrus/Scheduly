@@ -27,13 +27,13 @@ $(document).ready(function () {
         nowIndicator: true,
         dayMaxEvents: true, // allow "more" link when too many events
         events: {
-                url: '/calendar/get-all-events',
-            },
+            url: '/calendar/get-all-events',
+        },
 
         eventClick: function (info) {
             fillEditContainerWithData(info.event)
         },
-        eventDrop: function (info){
+        eventDrop: function (info) {
             let parsedFromDate = moment(info.event.start).format(moment.HTML5_FMT.DATETIME_LOCAL);
             let parsedToDate = moment(info.event.end).format(moment.HTML5_FMT.DATETIME_LOCAL);
             let Task = {
@@ -48,14 +48,14 @@ $(document).ready(function () {
                 contentType: 'application/json'
             })
         },
-        select: function (info){
-            let $priorityDropdownButton =  $('#priorityDropdownButton');
+        select: function (info) {
+            let $priorityDropdownButton = $('#priorityDropdownButton');
             let $statusDropdownButton = $('#statusDropdownButton');
             let parsedFromDate = moment(info.start).format(moment.HTML5_FMT.DATETIME_LOCAL);
             let parsedToDate = moment(info.end).subtract(1, 'seconds')._d;
             $('#fromDate').val(parsedFromDate);
             $('#toDate').val(moment(parsedToDate).format(moment.HTML5_FMT.DATETIME_LOCAL));
-            showAddTaskForm($priorityDropdownButton,$statusDropdownButton)
+            showAddTaskForm($priorityDropdownButton, $statusDropdownButton)
         }
     });
     calendar.render();
@@ -68,12 +68,12 @@ $(document).ready(function () {
     let $firstHeaderGroup = $('.fc-header-toolbar .fc-toolbar-chunk:last .btn-group:first')
     let $secondHeaderGroup = $('.fc-header-toolbar .fc-toolbar-chunk:last .btn-group:last')
     $firstHeaderGroup.css({
-        'padding-left':'15px',
-        'margin-top':'10px'
+        'padding-left': '15px',
+        'margin-top': '10px'
     })
     $secondHeaderGroup.css({
-        'padding-right':'15px',
-        'margin-top':'10px'
+        'padding-right': '15px',
+        'margin-top': '10px'
     })
 
     /* Edits task */
@@ -82,7 +82,7 @@ $(document).ready(function () {
         let priorityChecked = $priorityDropdownButton.text().toString().trim().toUpperCase() === ('PRIORITY' || '');
         let statusChecked = $statusDropdownButton.text().toString().trim().toUpperCase() === ('STATUS' || '');
         let elementId = $('#addTaskForm').data('elementId');
-        if($(this).closest('form')[0].checkValidity() && '' !== $taskTitle.val()
+        if ($(this).closest('form')[0].checkValidity() && '' !== $taskTitle.val()
             && '' !== $fromDate.val()
             && '' !== $toDate.val()
             && !priorityChecked
@@ -116,12 +116,12 @@ $(document).ready(function () {
                         break;
                 }
                 hideContainer();
-                calendar.getEventById(elementId).setProp('title',data.title);
-                calendar.getEventById(elementId).setProp('backgroundColor',color);
-                calendar.getEventById(elementId).setProp('borderColor',color);
+                calendar.getEventById(elementId).setProp('title', data.title);
+                calendar.getEventById(elementId).setProp('backgroundColor', color);
+                calendar.getEventById(elementId).setProp('borderColor', color);
                 calendar.getEventById(elementId).setStart(data.fromDate)
                 calendar.getEventById(elementId).setEnd(data.toDate);
-            }).fail(function (data){
+            }).fail(function (data) {
                 console.log(data)
             });
         }
@@ -156,7 +156,7 @@ $(document).ready(function () {
 
     /* Add task */
 
-    $('.create-task-button-calendar').on('click submit touchstart',function (e){
+    $('.create-task-button-calendar').on('click submit touchstart', function (e) {
         let $taskTitle = $('#taskTitle').val();
         let $fromDate = $('#fromDate').val();
         let $toDate = $('#toDate').val()
@@ -165,7 +165,7 @@ $(document).ready(function () {
         let $description = $('#description').text().toString().trim();
         let priorityChecked = $priority === ('PRIORITY' || '');
         let statusChecked = $status === ('STATUS' || '');
-        if($(this).closest('form')[0].checkValidity() && '' !== $taskTitle
+        if ($(this).closest('form')[0].checkValidity() && '' !== $taskTitle
             && '' !== $fromDate
             && '' !== $toDate
             && !priorityChecked
@@ -204,7 +204,7 @@ $(document).ready(function () {
                     end: $toDate,
                     color: color
                 })
-            }).fail(function (data){
+            }).fail(function (data) {
                 console.log(data)
             });
         }
@@ -276,7 +276,7 @@ function fillEditContainerWithData(event) {
                 data.status = "Stuck";
                 break;
         }
-        $('#addTaskForm').data('elementId',data.id);
+        $('#addTaskForm').data('elementId', data.id);
         $taskTitle.val(data.title);
         $fromDate.val(data.fromDate);
         $toDate.val(data.toDate);

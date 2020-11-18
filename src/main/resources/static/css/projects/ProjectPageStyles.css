@@ -1,0 +1,310 @@
+tr .default-button,
+tr .timeline-button {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+}
+
+tbody .dropdown-toggle::after {
+    content: none;
+}
+
+tbody .dropdown-menu .dropdown-toggle {
+    width: 90%;
+    margin: 10px 0 10px 10px;
+    border-radius: 0;
+}
+
+.bin-icon {
+    width: 18px;
+    height: 18px;
+}
+.bin-icon-button,
+.bin-icon-button:focus,
+.bin-icon-button:active {
+    background-color: white;
+    border: 0 none;
+    outline: none;
+    box-shadow: none;
+    padding: 0;
+}
+.invisible {
+    visibility: hidden;
+}
+
+.action-cell {
+    justify-content: center;
+    text-align: center;
+}
+
+tbody .dropdown-menu {
+    width: 100%;
+    background-color: rgb(245,246,248);
+    transform: translate3d(0px, 40px, 0px) !important;
+    border: solid 1px;
+}
+
+.option-select-cell {
+    min-width: 100px !important;
+    padding: 0!important;
+}
+
+.edit-icon {
+    height: 20px;
+    width: 20px;
+    margin-left: 20px;
+    display: none;
+}
+
+.edit-icon-button {
+    display: none;
+}
+
+.edit-icon-button,
+.edit-icon-button:active,
+.edit-icon-button:hover,
+.edit-icon-button:focus,
+.edit-icon {
+    background-color: rgba(242, 246, 248, 0.1);
+    border: 0 none;
+    outline: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+.option-orange {
+    background-color: rgb(253, 171, 61) !important;
+}
+
+.option-green {
+    background-color: rgb(0, 200, 117) !important;
+}
+
+.option-red {
+    background-color: rgb(226, 68, 92) !important;
+}
+
+.option-pink {
+    background-color: rgb(255, 90, 196) !important;
+}
+
+.option-blue {
+    background-color: rgb(87, 155, 252) !important;
+}
+
+.option-purple {
+    background-color: rgb(120, 75, 209) !important;
+}
+
+body {
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+#txtSearch {
+    margin-right: 10px;
+}
+
+tbody {
+    background-color: rgb(245,246,248);
+}
+
+tbody tr td:first-child {
+    background-color: white;
+}
+
+table {
+    margin-top: 25px;
+    margin-bottom: 100px!important;
+}
+
+table > thead {
+    text-align: center;
+}
+
+thead th {
+    height: 40px;
+    max-height: 40px;
+    font-size: 18px;
+    padding-bottom: 10px!important;
+}
+
+tbody td:not(:first-child){
+    border-right: 1px white solid!important;
+    border-left: 1px white solid!important;
+}
+
+.priority-column {
+    background-color: rgb(245,246,248);
+    border-top-left-radius: 15px;
+}
+
+.status-column {
+    background-color: rgb(245,246,248);
+    border-top-right-radius: 15px;
+}
+
+.add-task-row {
+    background-color: white;
+    border: 1px solid rgb(245,246,248)!important;
+    box-shadow: #b6b6b6;
+    padding: 0!important;
+    justify-content: space-between!important;
+}
+
+.black-border,
+.black-border:hover,
+.black-border:focus,
+.black-border:active,
+.black-border:focus-visible,
+.black-border:focus-within {
+    border: 1px solid black!important;
+}
+
+.blue-border,
+.blue-border:hover,
+.blue-border:focus,
+.blue-border:active,
+.blue-border:focus-visible,
+.blue-border:focus-within {
+    border: 1px solid rgb(147, 185, 242)!important;
+}
+
+.title-column[contenteditable]:focus {
+    outline: 2px solid rgb(245,246,248);
+}
+
+.add-task-button,
+.add-task-button:hover,
+.add-task-button:focus,
+.add-task-button:active{
+    display: inline!important;
+    height: 34px;
+    max-height: 35px;
+    width: 100%;
+    max-width: 100%;
+    padding: 5px 3px;
+    background-color: rgb(147, 185, 242)!important;
+    border-color: rgb(147, 185, 242)!important;
+    float: right;
+    border-radius: 0;
+}
+
+.add-task-button-cell {
+    padding: 0!important;
+}
+
+tbody tr:not(:last-child) {
+    height: 35px;
+    max-height: 35px;
+    border: 1px solid white !important;
+}
+
+.add-task-row-input,
+.add-task-row-input:hover,
+.add-task-row-input:active,
+.add-task-row-input:focus {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    border: 0 none;
+    outline: none;
+    box-shadow: none;
+    padding: 5px;
+    display: inline;
+}
+
+.priority-column,
+.status-column,
+.date-cell,
+.time-estimated-cell{
+    width: 13%;
+}
+
+.time-estimated-cell {
+    min-width: 100px;
+    text-align: center;
+}
+
+.date-cell {
+    min-width: 100px;
+    text-align: center;
+    padding: 0!important;
+}
+
+.date-task-input,
+.date-task-input:focus,
+.date-task-input:active {
+    border: 0 none;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    padding: 6px 12px 0 12px;
+    background-color: rgb(245,246,248);
+    min-width: 100px;
+    outline: 0;
+    box-shadow: none;
+}
+
+.time-estimated-input,
+.time-estimated-input:focus,
+.time-estimated-input:active {
+    border: 0 none;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    padding: 5px 12px 0 12px;
+    background-color: rgb(245,246,248);
+    min-width: 100px;
+    box-shadow: none;
+}
+
+.task-title {
+    min-width: 200px;
+}
+
+/* Small screens */
+@media only screen and (max-width: 768px) {
+    main {
+        margin-top: 21px;
+        padding: 20px;
+        padding-bottom: 100px !important;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    #search-form {
+        margin-top: 10px;
+    }
+}
+
+/* Large screens */
+@media only screen and (min-width: 769px) {
+    main {
+        margin-top: 21px;
+        margin-left: 6rem;
+        padding: 20px;
+    }
+
+    table {
+        padding-bottom: 200px;
+        margin-bottom: 200px;
+    }
+}
+@media only screen and (min-width: 670px) {
+    #addProjectButton {
+        margin-left: 20px;
+    }
+}
+.title-column {
+    width: 50%;
+    text-align: left!important;
+    font-size: 20px!important;
+}
+.estimated-time-sum {
+    text-align: center;
+    height: 35px;
+    background-color: rgb(245,246,248);
+}

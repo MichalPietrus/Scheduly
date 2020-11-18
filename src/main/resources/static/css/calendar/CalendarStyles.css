@@ -20,10 +20,12 @@ body {
         padding: 20px;
     }
 }
+
 @media only screen and (max-width: 473px) {
     .fc-toolbar-chunk .btn-group {
         width: 100%;
     }
+
     .fc-today-button {
         margin-right: 15px;
     }
@@ -32,19 +34,21 @@ body {
 .fc-toolbar-chunk {
     width: 100%;
 }
+
 .fc-toolbar-title {
     text-align: center;
 }
 
 .fc-today-button {
-    margin-left: 15px!important;
-    border-radius: 4px!important;
-    float: left!important;
+    margin-left: 15px !important;
+    border-radius: 4px !important;
+    float: left !important;
     width: 120px;
 }
+
 .fc-next-button {
-    border-top-right-radius: 4px!important;
-    border-bottom-right-radius: 4px!important;
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
 }
 
 #calendar {

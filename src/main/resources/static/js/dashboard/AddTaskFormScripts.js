@@ -1,7 +1,7 @@
-function dropdownSelection($dropdownButton,$dropdownToggle) {
-    $($dropdownToggle).on('click touchstart', function(){
+function dropdownSelection($dropdownButton, $dropdownToggle) {
+    $($dropdownToggle).on('click touchstart', function () {
         $dropdownButton.html($(this).html());
-        if($(this).parents('.dropdown').hasClass('status')) {
+        if ($(this).parents('.dropdown').hasClass('status')) {
             swapClass($dropdownButton, $(this), 'option-orange', 'option-green', 'option-red')
             swapClass($dropdownButton, $(this), 'option-green', 'option-orange', 'option-red')
             swapClass($dropdownButton, $(this), 'option-red', 'option-green', 'option-orange')
@@ -13,8 +13,8 @@ function dropdownSelection($dropdownButton,$dropdownToggle) {
     });
 }
 
-function swapClass($dropdownButton,$option,addClass, removeClass, removeClassTwo) {
-    if($option.hasClass(addClass)){
+function swapClass($dropdownButton, $option, addClass, removeClass, removeClassTwo) {
+    if ($option.hasClass(addClass)) {
         $dropdownButton.addClass(addClass);
         $dropdownButton.removeClass(removeClass);
         $dropdownButton.removeClass(removeClassTwo);
@@ -33,8 +33,6 @@ function hideContainer() {
 }
 
 
-
-
 /* Displays Add Task Form after clicking the button*/
 
 $(function () {
@@ -42,11 +40,11 @@ $(function () {
     let $fadeinContainer = $('.fadein-container');
     let $overlay = $('#overlay');
     $addTaskButton.on('click touchstart', function (e) {
-        let $priorityDropdownButton =  $('#priorityDropdownButton');
+        let $priorityDropdownButton = $('#priorityDropdownButton');
         let $statusDropdownButton = $('#statusDropdownButton');
         $('#fromDate').val('');
         $('#toDate').val('');
-        showAddTaskForm($priorityDropdownButton,$statusDropdownButton)
+        showAddTaskForm($priorityDropdownButton, $statusDropdownButton)
     });
     $('body').on('mousedown touchstart', function (e) {
         let $descriptionContainer = $('.description-container');
@@ -59,20 +57,20 @@ $(function () {
             $overlay.removeClass('overlay');
             $('body').removeClass('stop-scrolling')
             $fadeinContainer.hide();
-            $descriptionContainer.animate({width:'hide'},350);
+            $descriptionContainer.animate({width: 'hide'}, 350);
         }
     });
 });
 
 /* Changes colors of dropdown buttons */
 
-$(function() {
+$(function () {
     let $statusDropdownButton = $('#statusDropdownButton');
     let $priorityDropdownButton = $('#priorityDropdownButton');
     let $statusDropdownToggle = $('#statusDropdownMenu button');
     let $priorityDropdownToggle = $('#priorityDropdownMenu button');
-    dropdownSelection($statusDropdownButton,$statusDropdownToggle);
-    dropdownSelection($priorityDropdownButton,$priorityDropdownToggle);
+    dropdownSelection($statusDropdownButton, $statusDropdownToggle);
+    dropdownSelection($priorityDropdownButton, $priorityDropdownToggle);
 });
 
 $(function () {
@@ -84,18 +82,18 @@ $(function () {
     let $description = $('#description');
     $description.add('#descriptionBoxNavigation > button').on('click', function (e) {
         let $descriptionTextArea = $('#descriptionTextArea').val();
-       let fadeInContainerHeight = $fadeinContainer.css('height');
-       $descriptionContainer.css('height',fadeInContainerHeight);
-       $descriptionContainer.toggle("slide",500);
-       $fadeinContainer.toggle();
-       $description.text($descriptionTextArea)
-   })
+        let fadeInContainerHeight = $fadeinContainer.css('height');
+        $descriptionContainer.css('height', fadeInContainerHeight);
+        $descriptionContainer.toggle("slide", 500);
+        $fadeinContainer.toggle();
+        $description.text($descriptionTextArea)
+    })
 
     /* On resize make copy the height of container which it is in */
 
-    $(window).on('resize',function (){
-       let fadeInContainerHeight = $fadeinContainer.css('height');
-       $descriptionContainer.css('height',fadeInContainerHeight);
+    $(window).on('resize', function () {
+        let fadeInContainerHeight = $fadeinContainer.css('height');
+        $descriptionContainer.css('height', fadeInContainerHeight);
     });
 });
 
@@ -106,7 +104,7 @@ $(function () {
 */
 
 $(function () {
-    $('.create-task-button-dashboard').on('click submit touchstart',function (e){
+    $('.create-task-button-dashboard').on('click submit touchstart', function (e) {
         let $taskTitle = $('#taskTitle').val();
         let $fromDate = $('#fromDate').val();
         let $toDate = $('#toDate').val()
@@ -115,7 +113,7 @@ $(function () {
         let $description = $('#description').text().toString().trim();
         let priorityChecked = $priority === ('PRIORITY' || '');
         let statusChecked = $status === ('STATUS' || '');
-        if($(this).closest('form')[0].checkValidity() && '' !== $taskTitle
+        if ($(this).closest('form')[0].checkValidity() && '' !== $taskTitle
             && '' !== $fromDate
             && '' !== $toDate
             && !priorityChecked
@@ -136,11 +134,11 @@ $(function () {
             }).done(function (data) {
                 hideContainer();
                 console.log(data)
-                if(e.target.classList.contains('dashboard')) {
+                if (e.target.classList.contains('dashboard')) {
                     showTableTasksElements(data, e)
                 }
-            }).fail(function (data){
-               console.log(data)
+            }).fail(function (data) {
+                console.log(data)
             });
         }
     });
@@ -150,17 +148,17 @@ $(function () {
 
 $(function () {
 
-  let $FromDate = $('#fromDate');
-  let $ToDate = $('#toDate');
+    let $FromDate = $('#fromDate');
+    let $ToDate = $('#toDate');
 
-  $ToDate.add($FromDate).on('change',function () {
-      let parsedFromDate = new Date($FromDate.val());
-      let parsedToDate = new Date($ToDate.val());
-      if(parsedToDate.getTime() < parsedFromDate.getTime()){
-          let newParsedFromDate = new Date(parsedToDate.setMinutes(parsedToDate.getMinutes() - 30))
-          $FromDate.val(newParsedFromDate.toISOString().substring(0, 16));
-      }
-  });
+    $ToDate.add($FromDate).on('change', function () {
+        let parsedFromDate = new Date($FromDate.val());
+        let parsedToDate = new Date($ToDate.val());
+        if (parsedToDate.getTime() < parsedFromDate.getTime()) {
+            let newParsedFromDate = new Date(parsedToDate.setMinutes(parsedToDate.getMinutes() - 30))
+            $FromDate.val(newParsedFromDate.toISOString().substring(0, 16));
+        }
+    });
 
 });
 

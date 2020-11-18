@@ -137,13 +137,13 @@ function showTableTasksElements(data, e) {
 
         let $tableRow = $('#item_' + data[index].sequence);
 
-        if(e.target.id === 'createTaskButton') {
+        if (e.target.id === 'createTaskButton') {
             $tableBody.html(function () {
                 return row + $(this).html();
             });
-        } else if(e.target.id === 'edit-task-button'){
-            $tableRow.html(function (){
-               return row;
+        } else if (e.target.id === 'edit-task-button') {
+            $tableRow.html(function () {
+                return row;
             });
             let content = $tableRow.contents();
             $tableRow.replaceWith(content);
@@ -159,8 +159,8 @@ function showTableTasksElements(data, e) {
 
 }
 
-$(function() {
-    $('tbody').on('click','.table-dropdown-menu button',function () {
+$(function () {
+    $('tbody').on('click', '.table-dropdown-menu button', function () {
         let tableRowId = $(this).parents('tr').attr('id');
         let Task = {
             choosedOption: $(this).text().toString().trim(),
@@ -175,8 +175,8 @@ $(function() {
     });
 });
 
-$(function() {
-    $('tbody').on('click','.default-button',function () {
+$(function () {
+    $('tbody').on('click', '.default-button', function () {
         let $dropdownButton = $(this);
         let $dropdownToggle = $($dropdownButton).next().children('button');
         dropdownSelection($dropdownButton, $dropdownToggle);
@@ -189,19 +189,19 @@ $(function () {
 
     let $tbody = $('tbody');
 
-    $tbody.on('mouseenter','.timeline-button',function () {
+    $tbody.on('mouseenter', '.timeline-button', function () {
         $(this).text($(this).data('numberOfDays') + ' days');
     })
 
-    $tbody.on('mouseleave','.timeline-button',function () {
+    $tbody.on('mouseleave', '.timeline-button', function () {
         $(this).text($(this).data('fromDate') + ' - ' + $(this).data('toDate'));
     })
 });
 
 /* On status change, changes timeline color and tooltip*/
 
-$(function() {
-    $('tbody').on('click','.status .table-dropdown-menu button',function () {
+$(function () {
+    $('tbody').on('click', '.status .table-dropdown-menu button', function () {
         let rowId = $(this).parents('tr').attr('id');
         let $button = $('#' + rowId + ' > td > .timeline-button');
         let toDateData = $button.data('toDate').toString();
@@ -279,20 +279,20 @@ $(function () {
                     },
                 }).done(function (data) {
                     let filteredData = [];
-                    $.each(data,function (index) {
+                    $.each(data, function (index) {
                         let condition = false;
                         let $tbody = $('tbody tr');
                         $tbody.each(function () {
-                            if($('#item_' + data[index].sequence).length) {
+                            if ($('#item_' + data[index].sequence).length) {
                                 condition = true;
                                 return false;
                             }
                         })
-                        if(!condition) {
+                        if (!condition) {
                             filteredData.push(data[index]);
                         }
                     })
-                    showTableTasksElements(filteredData,e);
+                    showTableTasksElements(filteredData, e);
                 }).fail(function (data) {
                     console.log(data)
                 });
@@ -307,8 +307,8 @@ $(function () {
 
     let $search = $('#txtSearch');
     let $searchSubmitButton = $('#search-button');
-    $search.on('keyup',searchEngine);
-    $searchSubmitButton.on('click submit touchend',searchEngine);
+    $search.on('keyup', searchEngine);
+    $searchSubmitButton.on('click submit touchend', searchEngine);
 
     /* Searches for the element in database by title and also have the autocomplete feature */
 
@@ -330,35 +330,35 @@ $(function () {
             });
             let value = $('#txtSearch').val().toLowerCase();
             let filteredArray = [];
-            $.each(data,function (index) {
+            $.each(data, function (index) {
                 let firstCondition = (data[index].title.toLowerCase().indexOf(value) > -1);
                 let $tbody = $('tbody tr');
                 let secondCondition = false;
                 let thirdCondition = false;
                 $tbody.each(function () {
                     let $taskTitle = $('#' + $(this).attr('id') + ' .task-title');
-                    if($taskTitle.text().toLowerCase() !== data[index].title.toLowerCase()) {
+                    if ($taskTitle.text().toLowerCase() !== data[index].title.toLowerCase()) {
                         secondCondition = true;
                         return false;
                     }
                 })
                 $tbody.each(function () {
-                    if($('#item_' + data[index].sequence).length) {
+                    if ($('#item_' + data[index].sequence).length) {
                         thirdCondition = true;
                         return false;
                     }
                 })
-                if(firstCondition && secondCondition && !thirdCondition)
-                   filteredArray.push(data[index])
+                if (firstCondition && secondCondition && !thirdCondition)
+                    filteredArray.push(data[index])
             });
-            showTableTasksElements(filteredArray,e);
-            $("tbody tr").filter(function() {
+            showTableTasksElements(filteredArray, e);
+            $("tbody tr").filter(function () {
                 let $taskTitle = $('#' + $(this).attr('id') + ' .task-title');
                 $(this).toggle(($taskTitle).text().toLowerCase().indexOf(value) > -1)
             });
-            if(value === ''){
+            if (value === '') {
                 $('tbody').html(function () {
-                  return '';
+                    return '';
                 });
                 $.get({
                     url: "/task/get-first-15",
@@ -385,12 +385,12 @@ $(function () {
             let data = $(this).sortable('serialize');
             let sequenceTable = [];
             let splitData = data.split('&');
-            $.each(splitData,function (index) {
+            $.each(splitData, function (index) {
                 sequenceTable.push(splitData[index].toString().split('=')[1])
             })
             console.log(sequenceTable)
             let Test = {
-                sequenceTable : sequenceTable
+                sequenceTable: sequenceTable
             }
             $.ajax({
                 url: 'task/save-sequence',
@@ -398,7 +398,7 @@ $(function () {
                 contentType: "application/json",
                 data: JSON.stringify(Test)
             }).done(function (data) {
-            }).fail(function (data){
+            }).fail(function (data) {
                 console.log(data)
             });
         }

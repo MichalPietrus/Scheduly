@@ -1,8 +1,6 @@
 package com.scheduly.service;
 
 import com.scheduly.model.Task;
-import com.scheduly.pojo.TaskPojo;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 

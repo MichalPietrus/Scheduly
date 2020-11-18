@@ -6,7 +6,6 @@ import com.scheduly.model.Task;
 import com.scheduly.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -40,24 +39,36 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void setPriority(String priority, Task taskModel) {
-        switch (priority){
-            case "LOW" : taskModel.setPriority(Priority.LOW);break;
-            case "MEDIUM" : taskModel.setPriority(Priority.MEDIUM);break;
-            case "HIGH" : taskModel.setPriority(Priority.HIGH);break;
+        switch (priority) {
+            case "LOW":
+                taskModel.setPriority(Priority.LOW);
+                break;
+            case "MEDIUM":
+                taskModel.setPriority(Priority.MEDIUM);
+                break;
+            case "HIGH":
+                taskModel.setPriority(Priority.HIGH);
+                break;
         }
     }
 
     @Override
     public void setStatus(String status, Task taskModel) {
         switch (status) {
-            case "IN PROGRESS": taskModel.setStatus(Status.IN_PROGRESS);break;
-            case "DONE": taskModel.setStatus(Status.DONE);break;
-            case "STUCK": taskModel.setStatus(Status.STUCK);break;
+            case "IN PROGRESS":
+                taskModel.setStatus(Status.IN_PROGRESS);
+                break;
+            case "DONE":
+                taskModel.setStatus(Status.DONE);
+                break;
+            case "STUCK":
+                taskModel.setStatus(Status.STUCK);
+                break;
         }
     }
 
     @Override
-    public Task findBySequence(long sequenceId){
+    public Task findBySequence(long sequenceId) {
         return taskRepository.findBySequence(sequenceId);
     }
 
