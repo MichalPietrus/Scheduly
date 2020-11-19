@@ -29,7 +29,7 @@ public class Project {
     @JsonManagedReference
     private List<ProjectTask> projectTasks;
 
-    private void addProjectTask(ProjectTask projectTask) {
+    public void addProjectTask(ProjectTask projectTask) {
         projectTasks.add(projectTask);
         projectTask.setProject(this);
     }

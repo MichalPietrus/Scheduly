@@ -24,7 +24,7 @@ public class ProjectTask {
     @Size(max = 35)
     @NotNull
     private String title;
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     private int estimatedTime;
     private Status status;

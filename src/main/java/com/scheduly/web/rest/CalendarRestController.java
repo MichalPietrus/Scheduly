@@ -7,6 +7,7 @@ import com.scheduly.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,10 @@ public class CalendarRestController {
     }
 
     @GetMapping("/get-all-events")
-    public List<TaskCalendarFormat> getAllEvents() {
+    public List<TaskCalendarFormat> getAllEvents(Principal principal) {
 
         List<TaskCalendarFormat> tasksCalendarFormatList = new ArrayList<>();
-        List<Task> tasksFromDatabase = taskService.findAllTasks();
+        List<Task> tasksFromDatabase = taskService.findAllByUserUsername(principal.getName());
 
         for (Task task : tasksFromDatabase) {
             TaskCalendarFormat taskCalendarFormat = new TaskCalendarFormat();
@@ -56,10 +57,10 @@ public class CalendarRestController {
 
     @DeleteMapping("/delete-task")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteTaskById(@RequestParam long elementId) {
+    public void deleteTaskById(@RequestParam long elementId, Principal principal) {
         long tableRowId = taskService.findTaskById(elementId).getSequence();
         taskService.removeById(elementId);
-        taskService.updateSequenceAfterDelete(tableRowId);
+        taskService.updateSequenceAfterDelete(tableRowId, principal.getName());
     }
 
     @PatchMapping("/edit")
@@ -77,8 +78,6 @@ public class CalendarRestController {
     @PatchMapping("/save-position-on-drop")
     public Task savePositionOnDrop(@RequestBody TaskPojo taskPojo) {
         Task taskFromDatabase = taskService.findTaskById(taskPojo.getId());
-        System.out.println(taskPojo.getFromDate());
-        System.out.println(taskPojo.getToDate());
         taskFromDatabase.setFromDate(taskPojo.getFromDate());
         taskFromDatabase.setToDate(taskPojo.getToDate());
         return taskService.saveTask(taskFromDatabase);

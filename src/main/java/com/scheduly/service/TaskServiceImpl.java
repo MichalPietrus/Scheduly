@@ -18,8 +18,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllTasks() {
-        return taskRepository.findAll();
+    public List<Task> findAllByUserUsername(String username) {
+        return taskRepository.findAllByUserUsername(username);
     }
 
     @Override
@@ -33,8 +33,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task findTaskByHighestSequence() {
-        return taskRepository.findFirstByOrderBySequenceDesc();
+    public Task findTaskByHighestSequence(String username) {
+        return taskRepository.findFirstByUserUsernameOrderBySequenceDesc(username);
     }
 
     @Override
@@ -68,34 +68,34 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task findBySequence(long sequenceId) {
-        return taskRepository.findBySequence(sequenceId);
+    public Task findBySequence(long sequenceId,String username) {
+        return taskRepository.findBySequenceAndUserUsername(sequenceId,username);
     }
 
     @Override
-    public List<Task> findTop15ByOrderBySequenceDesc() {
-        return taskRepository.findTop15ByOrderBySequenceDesc();
+    public List<Task> findTop15ByUserUsernameOrderBySequenceDesc(String username) {
+        return taskRepository.findTop15ByUserUsernameOrderBySequenceDesc(username);
     }
 
     @Override
-    public List<Task> findFirstLowerElementThan(long sequenceId) {
+    public List<Task> findFirstLowerElementThan(long sequenceId, String username) {
         sequenceId = sequenceId - 1;
-        return taskRepository.findFirstLowerElementThan(sequenceId);
+        return taskRepository.findFirstLowerElementThan(sequenceId,username);
     }
 
     @Override
-    public void removeBySequence(long id) {
-        taskRepository.delete(taskRepository.findBySequence(id));
+    public void removeBySequence(long id,String username) {
+        taskRepository.delete(taskRepository.findBySequenceAndUserUsername(id,username));
     }
 
     @Override
-    public void updateSequenceAfterDelete(long sequenceId) {
-        taskRepository.updateSequenceAfterDelete(sequenceId);
+    public void updateSequenceAfterDelete(long sequenceId,String username) {
+        taskRepository.updateSequenceAfterDelete(sequenceId,username);
     }
 
     @Override
-    public List<Task> findAllTasksByKeyword(String keyword) {
-        return taskRepository.findAllTasksByKeyword(keyword);
+    public List<Task> findAllTasksByKeyword(String keyword, String username) {
+        return taskRepository.findAllTasksByKeyword(keyword, username);
     }
 
     @Override

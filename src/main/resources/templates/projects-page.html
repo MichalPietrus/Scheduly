@@ -99,138 +99,6 @@
             </form>
         </div>
 
-        <!-- Table -->
-
-        <table role="table" class="table table-sm table-borderless table-responsive-lg">
-            <thead>
-            <tr class="table-row">
-                <th class="action-column" scope="col">
-                    <button type="button" class="bin-icon-button invisible">
-                        <img class="bin-icon invisible" src="img/trash-bin.svg" alt="bin"/>
-                    </button>
-                </th>
-                <th contenteditable="true" class="title-column" scope="col">Project Title</th>
-                <th class="priority-column" scope="col">Priority</th>
-                <th class="status-column" scope="col">Status</th>
-                <th class="date-column" scope="col">Date</th>
-                <th class="time-column" scope="col">Time Est.</th>
-            </tr>
-            </thead>
-            <tbody class="gray">
-            <tr class="table-row">
-                <td class="action-cell">
-                    <button type="button" class="bin-icon-button invisible">
-                        <img class="bin-icon invisible" src="img/trash-bin.svg" alt="bin"/>
-                    </button>
-                </td>
-                <td contenteditable="true" class="task-title">
-                    Test Data
-                </td>
-                <td class="option-select-cell">
-                    <div class="priority dropdown">
-                        <button class="btn btn-secondary dropdown-toggle default-button ${(choosedPriorityClass)}"
-                                type="button"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">${(data[index].priority)}
-                        </button>
-
-                        <div class="table-dropdown-menu dropdown-menu" aria-labelledby="priorityDropdown">
-                            <button class="btn btn-secondary dropdown-toggle option-pink" type="button">Low</button>
-                            <button class="btn btn-secondary dropdown-toggle option-blue" type="button">Medium</button>
-                            <button class="btn btn-secondary dropdown-toggle option-purple" type="button">High</button>
-                        </div>
-                    </div>
-                </td>
-                <td class="option-select-cell">
-                    <div class="status dropdown">
-                        <button class="btn btn-secondary dropdown-toggle default-button ${(choosedStatusClass)}"
-                                type="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            ${(data[index].status)}
-                        </button>
-
-                        <div class="table-dropdown-menu dropdown-menu" aria-labelledby="statusDropdown">
-                            <button class="btn btn-secondary dropdown-toggle option-green" type="button">Done</button>
-                            <button class="btn btn-secondary dropdown-toggle option-orange" type="button">In Progress
-                            </button>
-                            <button class="btn btn-secondary dropdown-toggle option-red" type="button">Stuck</button>
-                        </div>
-                    </div>
-                </td>
-                <td class="date-cell">
-                    <input type="date" class="date-task-input form-control"/>
-                </td>
-                <td class="time-estimated-cell">
-                    <input type="number" class="time-estimated-input form-control"/>
-                </td>
-            </tr>
-            <tr class="table-row">
-                <td class="action-cell">
-                    <button type="button" class="bin-icon-button invisible">
-                        <img class="bin-icon invisible" src="img/trash-bin.svg" alt="bin"/>
-                    </button>
-                </td>
-                <td contenteditable="true" class="task-title">
-                    Test Data 2
-                </td>
-                <td class="option-select-cell">
-                    <div class="priority dropdown">
-                        <button class="btn btn-secondary dropdown-toggle default-button ${(choosedPriorityClass)}"
-                                type="button"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">${(data[index].priority)}
-                        </button>
-
-                        <div class="table-dropdown-menu dropdown-menu" aria-labelledby="priorityDropdown">
-                            <button class="btn btn-secondary dropdown-toggle option-pink" type="button">Low</button>
-                            <button class="btn btn-secondary dropdown-toggle option-blue" type="button">Medium</button>
-                            <button class="btn btn-secondary dropdown-toggle option-purple" type="button">High</button>
-                        </div>
-                    </div>
-                </td>
-                <td class="option-select-cell">
-                    <div class="status dropdown">
-                        <button class="btn btn-secondary dropdown-toggle default-button ${(choosedStatusClass)}"
-                                type="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            ${(data[index].status)}
-                        </button>
-
-                        <div class="table-dropdown-menu dropdown-menu" aria-labelledby="statusDropdown">
-                            <button class="btn btn-secondary dropdown-toggle option-green" type="button">Done</button>
-                            <button class="btn btn-secondary dropdown-toggle option-orange" type="button">In Progress
-                            </button>
-                            <button class="btn btn-secondary dropdown-toggle option-red" type="button">Stuck</button>
-                        </div>
-                    </div>
-                </td>
-                <td class="date-cell">
-                    <input type="date" class="date-task-input form-control"/>
-                </td>
-                <td class="time-estimated-cell">
-                    <input type="number" class="time-estimated-input form-control"/>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr class="table-row">
-                <td></td>
-                <td class="add-task-row" colspan="4">
-                    <input class="add-task-row-input form-control" minlength="1" maxlength="35" type="text"
-                           placeholder="+ Add Task">
-                </td>
-                <td class="add-task-button-cell">
-                    <button class="btn btn-primary add-task-button" type="button">+ Add</button>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="5"></td>
-                <td class="estimated-time-sum">
-                </td>
-            </tr>
-            </tfoot>
-        </table>
-
     </main>
 
 
@@ -252,6 +120,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
         integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
         crossorigin="anonymous"></script>
+<script th:src="@{/js/CommonScripts.js}"></script>
 <script th:src="@{/js/projects/ProjectsScripts.js}"></script>
 
 </body>

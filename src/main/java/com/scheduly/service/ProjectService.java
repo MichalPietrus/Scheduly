@@ -6,8 +6,14 @@ import java.util.List;
 
 public interface ProjectService {
 
-    List<Project> findAllByOrderBySequenceDesc();
+    List<Project> findAllByOrderBySequence(String username);
 
-    Project createProject(Project project);
+    Project saveProject(Project project);
+
+    Project findFirstByUserUsernameOrderBySequenceDesc(String username);
+
+    Project findProjectById(long id);
+
+    Project findBySequenceAndUserUsername(long sequence, String username);
 
 }

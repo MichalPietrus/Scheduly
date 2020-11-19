@@ -9,7 +9,10 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
+    List<Project> findAllByUserUsernameOrderBySequence(String username);
 
-    List<Project> findAllByOrderBySequenceDesc();
+    Project findFirstByUserUsernameOrderBySequenceDesc(String username);
+
+    Project findBySequenceAndUserUsername(long sequence, String username);
 
 }

@@ -1,26 +1,3 @@
-function dropdownSelection($dropdownButton, $dropdownToggle) {
-    $($dropdownToggle).on('click touchstart', function () {
-        $dropdownButton.html($(this).html());
-        if ($(this).parents('.dropdown').hasClass('status')) {
-            swapClass($dropdownButton, $(this), 'option-orange', 'option-green', 'option-red')
-            swapClass($dropdownButton, $(this), 'option-green', 'option-orange', 'option-red')
-            swapClass($dropdownButton, $(this), 'option-red', 'option-green', 'option-orange')
-        } else {
-            swapClass($dropdownButton, $(this), 'option-pink', 'option-blue', 'option-purple')
-            swapClass($dropdownButton, $(this), 'option-blue', 'option-pink', 'option-purple')
-            swapClass($dropdownButton, $(this), 'option-purple', 'option-blue', 'option-pink')
-        }
-    });
-}
-
-function swapClass($dropdownButton, $option, addClass, removeClass, removeClassTwo) {
-    if ($option.hasClass(addClass)) {
-        $dropdownButton.addClass(addClass);
-        $dropdownButton.removeClass(removeClass);
-        $dropdownButton.removeClass(removeClassTwo);
-    }
-}
-
 function hideContainer() {
     let $descriptionContainer = $('.description-container');
     let $fadeinContainer = $('.fadein-container');
@@ -69,8 +46,8 @@ $(function () {
     let $priorityDropdownButton = $('#priorityDropdownButton');
     let $statusDropdownToggle = $('#statusDropdownMenu button');
     let $priorityDropdownToggle = $('#priorityDropdownMenu button');
-    dropdownSelection($statusDropdownButton, $statusDropdownToggle);
-    dropdownSelection($priorityDropdownButton, $priorityDropdownToggle);
+    swapClassesOnStatusOrPrioritySelect($statusDropdownButton, $statusDropdownToggle);
+    swapClassesOnStatusOrPrioritySelect($priorityDropdownButton, $priorityDropdownToggle);
 });
 
 $(function () {
@@ -133,8 +110,7 @@ $(function () {
                 data: JSON.stringify(Task)
             }).done(function (data) {
                 hideContainer();
-                console.log(data)
-                if (e.target.classList.contains('dashboard')) {
+                if (e.target.classList.contains('create-task-button-dashboard')) {
                     showTableTasksElements(data, e)
                 }
             }).fail(function (data) {

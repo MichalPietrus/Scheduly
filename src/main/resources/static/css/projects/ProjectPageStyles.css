@@ -41,7 +41,7 @@ tbody .dropdown-menu .dropdown-toggle {
 tbody .dropdown-menu {
     width: 100%;
     background-color: rgb(245,246,248);
-    transform: translate3d(0px, 40px, 0px) !important;
+    transform: translate3d(0px, 35px, 0px) !important;
     border: solid 1px;
 }
 
@@ -293,11 +293,6 @@ tbody tr:not(:last-child) {
         margin-bottom: 200px;
     }
 }
-@media only screen and (min-width: 670px) {
-    #addProjectButton {
-        margin-left: 20px;
-    }
-}
 .title-column {
     width: 50%;
     text-align: left!important;
@@ -307,4 +302,8 @@ tbody tr:not(:last-child) {
     text-align: center;
     height: 35px;
     background-color: rgb(245,246,248);
+}
+
+.time-estimated-text {
+    display: none;
 }

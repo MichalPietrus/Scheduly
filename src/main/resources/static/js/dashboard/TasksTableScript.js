@@ -5,39 +5,7 @@ function datediff(first, second) {
 function showTableTasksElements(data, e) {
     let $tableBody = $('tbody');
     $.each(data, function (index) {
-        let choosedPriorityClass;
-        let choosedStatusClass;
-
-        /* Sets the background color and text of status and priority */
-
-        switch (data[index].priority) {
-            case "LOW":
-                choosedPriorityClass = "option-pink";
-                data[index].priority = "Low";
-                break;
-            case "MEDIUM":
-                choosedPriorityClass = "option-blue";
-                data[index].priority = "Medium";
-                break;
-            case "HIGH":
-                choosedPriorityClass = "option-purple";
-                data[index].priority = "High";
-                break;
-        }
-        switch (data[index].status) {
-            case "DONE":
-                choosedStatusClass = "option-green";
-                data[index].status = "Done";
-                break;
-            case "IN_PROGRESS":
-                choosedStatusClass = "option-orange";
-                data[index].status = "In Progress";
-                break;
-            case "STUCK":
-                choosedStatusClass = "option-red";
-                data[index].status = "Stuck";
-                break;
-        }
+        let {choosedPriorityClass, choosedStatusClass} = setStatusAndPriority(data, index);
 
         /* Parses data and update timeline data,color and tooltip*/
 
@@ -173,14 +141,6 @@ $(function () {
             data: JSON.stringify(Task)
         })
     });
-});
-
-$(function () {
-    $('tbody').on('click', '.default-button', function () {
-        let $dropdownButton = $(this);
-        let $dropdownToggle = $($dropdownButton).next().children('button');
-        dropdownSelection($dropdownButton, $dropdownToggle);
-    })
 });
 
 $(function () {
