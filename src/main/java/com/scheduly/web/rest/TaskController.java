@@ -54,7 +54,7 @@ public class TaskController {
     }
 
     @PatchMapping("/update-dropdown-selected-data")
-    public Task updateDropdown(@RequestBody TaskPojo dropdownSelectedData,Principal principal) {
+    public Task updateDropdown(@RequestBody TaskPojo dropdownSelectedData, Principal principal) {
         String selectedOption = dropdownSelectedData.getChoosedOption().toUpperCase();
         long tableRowId = dropdownSelectedData.getSequence();
         Task taskToUpdate = taskService.findBySequence(tableRowId, principal.getName());
@@ -73,25 +73,25 @@ public class TaskController {
     }
 
     @GetMapping("/get-on-scroll")
-    public List<Task> findTasksOnScroll(@RequestParam String lastRowSequence,Principal principal) {
+    public List<Task> findTasksOnScroll(@RequestParam String lastRowSequence, Principal principal) {
         return taskService.findFirstLowerElementThan(Long.parseLong(lastRowSequence), principal.getName());
     }
 
     @GetMapping("/get-task-by-sequence")
-    public Task findTaskById(@RequestParam String tableRowId,Principal principal) {
+    public Task findTaskById(@RequestParam String tableRowId, Principal principal) {
         return taskService.findBySequence(Long.parseLong(tableRowId), principal.getName());
     }
 
     @DeleteMapping("/delete-task")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteTaskBySequence(@RequestParam String tableRowId,Principal principal) {
-        taskService.removeBySequence(Long.parseLong(tableRowId),principal.getName());
-        taskService.updateSequenceAfterDelete(Long.parseLong(tableRowId),principal.getName());
+    public void deleteTaskBySequence(@RequestParam String tableRowId, Principal principal) {
+        taskService.removeBySequence(Long.parseLong(tableRowId), principal.getName());
+        taskService.updateAllSequenceAfterDelete(Long.parseLong(tableRowId), principal.getName());
     }
 
     @PatchMapping("/edit")
-    public List<Task> editTask(@RequestBody TaskPojo task,Principal principal) {
-        Task taskFromDatabase = taskService.findBySequence(task.getSequence(),principal.getName());
+    public List<Task> editTask(@RequestBody TaskPojo task, Principal principal) {
+        Task taskFromDatabase = taskService.findBySequence(task.getSequence(), principal.getName());
         taskFromDatabase.setTitle(task.getTitle());
         taskFromDatabase.setFromDate(task.getFromDate());
         taskFromDatabase.setToDate(task.getToDate());
@@ -110,7 +110,7 @@ public class TaskController {
     }
 
     @PostMapping("/save-sequence")
-    public List<Task> saveTasksSequenceAfterDropdown(@RequestBody SequenceTablePojo test,Principal principal) {
+    public List<Task> saveTasksSequenceAfterDropdown(@RequestBody SequenceTablePojo test, Principal principal) {
         List<Long> sequenceTable = Arrays.stream(test.getSequenceTable()).map(Long::parseLong).collect(Collectors.toList());
         List<Task> tasksList = new ArrayList<>();
         List<Long> sortedTable = new ArrayList<>(sequenceTable);

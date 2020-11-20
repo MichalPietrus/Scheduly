@@ -20,6 +20,7 @@ tbody .dropdown-menu .dropdown-toggle {
     width: 18px;
     height: 18px;
 }
+
 .bin-icon-button,
 .bin-icon-button:focus,
 .bin-icon-button:active {
@@ -29,6 +30,7 @@ tbody .dropdown-menu .dropdown-toggle {
     box-shadow: none;
     padding: 0;
 }
+
 .invisible {
     visibility: hidden;
 }
@@ -40,14 +42,14 @@ tbody .dropdown-menu .dropdown-toggle {
 
 tbody .dropdown-menu {
     width: 100%;
-    background-color: rgb(245,246,248);
+    background-color: rgb(245, 246, 248);
     transform: translate3d(0px, 35px, 0px) !important;
     border: solid 1px;
 }
 
 .option-select-cell {
     min-width: 100px !important;
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .edit-icon {
@@ -108,7 +110,7 @@ body {
 }
 
 tbody {
-    background-color: rgb(245,246,248);
+    background-color: rgb(245, 246, 248);
 }
 
 tbody tr td:first-child {
@@ -117,7 +119,7 @@ tbody tr td:first-child {
 
 table {
     margin-top: 25px;
-    margin-bottom: 100px!important;
+    margin-bottom: 100px !important;
 }
 
 table > thead {
@@ -128,30 +130,30 @@ thead th {
     height: 40px;
     max-height: 40px;
     font-size: 18px;
-    padding-bottom: 10px!important;
+    padding-bottom: 10px !important;
 }
 
-tbody td:not(:first-child){
-    border-right: 1px white solid!important;
-    border-left: 1px white solid!important;
+tbody td:not(:first-child) {
+    border-right: 1px white solid !important;
+    border-left: 1px white solid !important;
 }
 
 .priority-column {
-    background-color: rgb(245,246,248);
+    background-color: rgb(245, 246, 248);
     border-top-left-radius: 15px;
 }
 
 .status-column {
-    background-color: rgb(245,246,248);
+    background-color: rgb(245, 246, 248);
     border-top-right-radius: 15px;
 }
 
 .add-task-row {
     background-color: white;
-    border: 1px solid rgb(245,246,248)!important;
+    border: 1px solid rgb(245, 246, 248) !important;
     box-shadow: #b6b6b6;
-    padding: 0!important;
-    justify-content: space-between!important;
+    padding: 0 !important;
+    justify-content: space-between !important;
 }
 
 .black-border,
@@ -160,7 +162,7 @@ tbody td:not(:first-child){
 .black-border:active,
 .black-border:focus-visible,
 .black-border:focus-within {
-    border: 1px solid black!important;
+    border: 1px solid black !important;
 }
 
 .blue-border,
@@ -169,31 +171,31 @@ tbody td:not(:first-child){
 .blue-border:active,
 .blue-border:focus-visible,
 .blue-border:focus-within {
-    border: 1px solid rgb(147, 185, 242)!important;
+    border: 1px solid rgb(147, 185, 242) !important;
 }
 
 .title-column[contenteditable]:focus {
-    outline: 2px solid rgb(245,246,248);
+    outline: 2px solid rgb(245, 246, 248);
 }
 
 .add-task-button,
 .add-task-button:hover,
 .add-task-button:focus,
-.add-task-button:active{
-    display: inline!important;
+.add-task-button:active {
+    display: inline !important;
     height: 34px;
     max-height: 35px;
     width: 100%;
     max-width: 100%;
     padding: 5px 3px;
-    background-color: rgb(147, 185, 242)!important;
-    border-color: rgb(147, 185, 242)!important;
+    background-color: rgb(147, 185, 242) !important;
+    border-color: rgb(147, 185, 242) !important;
     float: right;
     border-radius: 0;
 }
 
 .add-task-button-cell {
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 tbody tr:not(:last-child) {
@@ -219,7 +221,7 @@ tbody tr:not(:last-child) {
 .priority-column,
 .status-column,
 .date-cell,
-.time-estimated-cell{
+.time-estimated-cell {
     width: 13%;
 }
 
@@ -231,7 +233,7 @@ tbody tr:not(:last-child) {
 .date-cell {
     min-width: 100px;
     text-align: center;
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .date-task-input,
@@ -239,13 +241,30 @@ tbody tr:not(:last-child) {
 .date-task-input:active {
     border: 0 none;
     border-radius: 0;
-    width: 100%;
+    width: 80%;
     height: 100%;
     padding: 6px 12px 0 12px;
-    background-color: rgb(245,246,248);
+    background-color: rgb(245, 246, 248);
     min-width: 100px;
     outline: 0;
     box-shadow: none;
+    float: left;
+}
+
+.fa-exclamation-triangle {
+    width: 18px;
+    height: 18px;
+    color: red;
+}
+.icon-span {
+    width: 20%;
+    float: left;
+    padding-top: 7px;
+    padding-left: 10px;
+}
+
+.time-estimated-input {
+    display: none;
 }
 
 .time-estimated-input,
@@ -256,7 +275,7 @@ tbody tr:not(:last-child) {
     width: 100%;
     height: 100%;
     padding: 5px 12px 0 12px;
-    background-color: rgb(245,246,248);
+    background-color: rgb(245, 246, 248);
     min-width: 100px;
     box-shadow: none;
 }
@@ -293,17 +312,42 @@ tbody tr:not(:last-child) {
         margin-bottom: 200px;
     }
 }
+
 .title-column {
     width: 50%;
-    text-align: left!important;
-    font-size: 20px!important;
-}
-.estimated-time-sum {
-    text-align: center;
-    height: 35px;
-    background-color: rgb(245,246,248);
+    text-align: left !important;
+    font-size: 20px !important;
 }
 
-.time-estimated-text {
-    display: none;
+.estimated-time-sum {
+    padding-top: 8px!important;
+    text-align: center;
+    height: 35px;
+    background-color: rgb(245, 246, 248);
+}
+
+.modal-body p {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+#accept-delete-button {
+    background-color: rgb(230, 90, 63);
+}
+.priority-footer-cell,
+.status-footer-cell {
+    background-color: rgb(245, 246, 248);
+    height: 40px;
+    max-height: 40px;
+    padding-top: 6px!important;
+    padding-bottom: 6px!important;
+}
+.footer-cell {
+    height: 100%;
+    float: left
 }

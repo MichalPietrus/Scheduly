@@ -18,17 +18,19 @@ public interface TaskService {
 
     void setStatus(String status, Task taskModel);
 
-    Task findBySequence(long sequenceId,String username);
+    Task findBySequence(long sequenceId, String username);
 
     List<Task> findTop15ByUserUsernameOrderBySequenceDesc(String username);
 
-    List<Task> findFirstLowerElementThan(long sequenceId,String username);
+    List<Task> findFirstLowerElementThan(long sequenceId, String username);
 
-    void removeBySequence(long id,String username);
-
-    void updateSequenceAfterDelete(long sequenceId,String username);
+    void removeBySequence(long id, String username);
 
     List<Task> findAllTasksByKeyword(String keyword, String username);
+
+    List<Task> findAllBySequenceGreaterThanAndUserUsername(long sequenceId, String username);
+
+    void updateAllSequenceAfterDelete(long sequenceId, String username);
 
     void removeById(long id);
 

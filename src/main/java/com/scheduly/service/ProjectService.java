@@ -16,4 +16,8 @@ public interface ProjectService {
 
     Project findBySequenceAndUserUsername(long sequence, String username);
 
+    void removeProject(Project project);
+
+    void updateSequenceAfterDelete(long sequenceId, String username);
+
 }

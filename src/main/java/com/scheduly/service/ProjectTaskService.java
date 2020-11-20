@@ -1,7 +1,6 @@
 package com.scheduly.service;
 
 import com.scheduly.model.ProjectTask;
-import com.scheduly.model.Task;
 
 
 public interface ProjectTaskService {
@@ -11,5 +10,9 @@ public interface ProjectTaskService {
     void setProjectTaskPriority(String priority, ProjectTask projectTask);
 
     void setProjectTaskStatus(String status, ProjectTask projectTask);
+
+    void removeProjectTaskById(long id);
+
+    void updateSequenceAfterDelete(long sequenceId, long projectId);
 
 }

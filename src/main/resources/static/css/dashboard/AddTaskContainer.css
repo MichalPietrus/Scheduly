@@ -285,10 +285,6 @@ form .form-control:focus {
     font-weight: 500;
 }
 
-.modal-header {
-
-}
-
 .modal-footer {
     justify-content: space-between;
 }

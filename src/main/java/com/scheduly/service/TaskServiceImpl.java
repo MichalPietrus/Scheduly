@@ -68,8 +68,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task findBySequence(long sequenceId,String username) {
-        return taskRepository.findBySequenceAndUserUsername(sequenceId,username);
+    public Task findBySequence(long sequenceId, String username) {
+        return taskRepository.findBySequenceAndUserUsername(sequenceId, username);
     }
 
     @Override
@@ -80,22 +80,31 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> findFirstLowerElementThan(long sequenceId, String username) {
         sequenceId = sequenceId - 1;
-        return taskRepository.findFirstLowerElementThan(sequenceId,username);
+        return taskRepository.findFirstLowerElementThan(sequenceId, username);
     }
 
     @Override
-    public void removeBySequence(long id,String username) {
-        taskRepository.delete(taskRepository.findBySequenceAndUserUsername(id,username));
-    }
-
-    @Override
-    public void updateSequenceAfterDelete(long sequenceId,String username) {
-        taskRepository.updateSequenceAfterDelete(sequenceId,username);
+    public void removeBySequence(long id, String username) {
+        taskRepository.delete(taskRepository.findBySequenceAndUserUsername(id, username));
     }
 
     @Override
     public List<Task> findAllTasksByKeyword(String keyword, String username) {
         return taskRepository.findAllTasksByKeyword(keyword, username);
+    }
+
+    @Override
+    public List<Task> findAllBySequenceGreaterThanAndUserUsername(long sequenceId, String username) {
+        return taskRepository.findAllBySequenceGreaterThanAndUserUsername(sequenceId,username);
+    }
+
+    @Override
+    public void updateAllSequenceAfterDelete(long sequenceId, String username) {
+        List<Task> tasks = findAllBySequenceGreaterThanAndUserUsername(sequenceId,username);
+        for(Task task: tasks) {
+            task.setSequence(task.getSequence() - 1);
+        }
+        taskRepository.saveAll(tasks);
     }
 
     @Override

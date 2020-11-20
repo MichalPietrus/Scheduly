@@ -1,9 +1,6 @@
 package com.scheduly.service;
 
-import com.scheduly.enums.Priority;
-import com.scheduly.enums.Status;
 import com.scheduly.model.Project;
-import com.scheduly.model.ProjectTask;
 import com.scheduly.model.Task;
 import com.scheduly.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
@@ -43,6 +40,20 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project findBySequenceAndUserUsername(long sequence, String username) {
         return projectRepository.findBySequenceAndUserUsername(sequence, username);
+    }
+
+    @Override
+    public void removeProject(Project project) {
+        projectRepository.delete(project);
+    }
+
+    @Override
+    public void updateSequenceAfterDelete(long sequenceId, String username) {
+        List<Project> projects = projectRepository.findAllBySequenceGreaterThanAndUserUsername(sequenceId,username);
+        for(Project project: projects) {
+            project.setSequence(project.getSequence() - 1);
+        }
+        projectRepository.saveAll(projects);
     }
 
 

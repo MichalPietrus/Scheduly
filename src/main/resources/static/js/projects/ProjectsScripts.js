@@ -13,14 +13,13 @@ function formatDate(date) {
 }
 
 
-
 /* Creates and displays a task row */
 
-function createTaskRow(data,index, choosedPriorityClass, choosedStatusClass) {
+function createTaskRow(data, index, choosedPriorityClass, choosedStatusClass) {
 
     let date = data[index].date;
     let formattedDate;
-    if(date) {
+    if (date) {
         formattedDate = formatDate(date);
     }
 
@@ -65,81 +64,22 @@ function createTaskRow(data,index, choosedPriorityClass, choosedStatusClass) {
                                 </div>
                                 </td>
                                 <td class="date-cell">
+                                    <span class="icon-span">
+                                        <i class='fas fa-exclamation-triangle'></i>
+                                    </span>
                                     <input type="date" value="${formattedDate}" class="date-task-input form-control"/>
                                 </td>
                                 <td class="time-estimated-cell">
-                                    <i class="time-estimated-text">${(data[index].estimatedTime)}</i>
-                                    <input type="number" class="time-estimated-input form-control"/>
+                                    <i class="time-estimated-text">${(data[index].estimatedTime) + 'h'}</i>
+                                    <input type="number" value="${(data[index].estimatedTime)}" class="time-estimated-input form-control"/>
                                 </td>
                            </tr>
                     `;
 }
 
-$(function () {
-
-    let $addProjectButton = $('#addProjectButton');
-
-
-    /* On add Project button click creates new table for tasks */
-
-    $addProjectButton.on('click touchend', function () {
-
-        $.post({
-            url: "/projects/create-project",
-            contentType: "application/json"
-        }).done(function (data) {
-            let table = `        
-        <table id="${'item_' + (data.sequence)}" role="table" class="table table-sm table-borderless table-responsive-lg">
-            <thead>
-                <tr class="table-row">
-                    <th class="action-column" scope="col">
-                        <button type="button" class="bin-icon-button invisible">
-                            <img class="bin-icon invisible" src="img/trash-bin.svg" alt="bin"/>
-                        </button>
-                    </th>
-                    <th contenteditable="true" class="title-column" scope="col">Project Title</th>
-                    <th class="priority-column" scope="col">Priority</th>
-                    <th class="status-column" scope="col">Status</th>
-                    <th class="date-column" scope="col">Date</th>
-                    <th class="time-column" scope="col">Time Est.</th>
-                </tr>
-            </thead>
-            <tbody class="gray">
-            </tbody>
-            <tfoot>
-                <tr class="table-row">
-                    <td></td>
-                    <td class="add-task-row" colspan="4">
-                        <input class="add-task-row-input form-control" minlength="1" maxlength="35" type="text"
-                           placeholder="+ Add Task">
-                    </td>
-                    <td class="add-task-button-cell">
-                        <button class="btn btn-primary add-task-button" type="button">+ Add</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
-                    <td class="estimated-time-sum">
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-            `;
-
-            $('#mainContentHeader').after(table);
-        }).fail(function (data) {
-            console.log(data)
-        });
-
-    })
-
-    /* Shows all projects */
-
-    function showProjects(data, e) {
-        $.each(data, function (index) {
-
-            let table = `        
-        <table id="${'item_' + (data[index].sequence)}" role="table" class="table table-sm table-borderless table-responsive-lg">
+function createTable(data, index) {
+    return `        
+        <table id="${'table_' + (data[index].sequence)}" role="table" class="table table-sm table-borderless table-responsive-lg">
             <thead>
                 <tr class="table-row">
                     <th class="action-column" scope="col">
@@ -168,28 +108,121 @@ $(function () {
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="2"></td>
+                    <td class="priority-footer-cell"></td>
+                    <td class="status-footer-cell"></td>
+                    <td></td>
                     <td class="estimated-time-sum">
                     </td>
                 </tr>
             </tfoot>
         </table>
             `;
+}
+
+function showPriorityAndStatusFooter(LowCounter,MediumCounter,HighCounter,DoneCounter,InProgressCounter,StuckCounter,tableSequence,isUpdate) {
+    let totalPriorityCounter = LowCounter + MediumCounter + HighCounter;
+    let totalStatusCounter = DoneCounter + InProgressCounter + StuckCounter;
+    LowCounter = LowCounter/totalPriorityCounter * 100;
+    MediumCounter = MediumCounter/totalPriorityCounter * 100;
+    HighCounter = HighCounter/totalPriorityCounter * 100;
+    DoneCounter = DoneCounter/totalStatusCounter * 100;
+    InProgressCounter = InProgressCounter/totalStatusCounter * 100;
+    StuckCounter = StuckCounter/totalStatusCounter * 100;
+        let priorityFooterDiv = `
+                        <div style="height: 100%;width: 80%;margin: 0 auto">
+                            <div class="option-pink footer-cell" title="${(LowCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(LowCounter)}%"></div>
+                            <div class="option-blue footer-cell" title="${(MediumCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(MediumCounter)}%"></div>
+                            <div class="option-purple footer-cell" title="${(HighCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(HighCounter)}%"></div>
+                        </div>
+        `
+        if(!isUpdate)
+            $('#table_' + tableSequence + ' tfoot tr .priority-footer-cell').append(priorityFooterDiv)
+        else
+            $('#table_' + tableSequence + ' tfoot tr .priority-footer-cell').html(priorityFooterDiv);
+
+
+
+        let statusFooterDiv = `
+                        <div style="height: 100%;width: 80%;margin: 0 auto">
+                            <div class="option-green footer-cell" title="${(DoneCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(DoneCounter)}%"></div>
+                            <div class="option-orange footer-cell" title="${(InProgressCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(InProgressCounter)}%"></div>
+                            <div class="option-red footer-cell" title="${(StuckCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(StuckCounter)}%"></div>
+                        </div>
+        `
+
+        if(!isUpdate)
+            $('#table_' + tableSequence + ' tfoot tr .status-footer-cell').append(statusFooterDiv)
+        else
+            $('#table_' + tableSequence + ' tfoot tr .status-footer-cell').html(statusFooterDiv);
+
+
+        $('[data-toggle="tooltip"]').tooltip({
+            position: 'top',
+        })
+}
+
+$(function () {
+
+    let $addProjectButton = $('#addProjectButton');
+
+
+    /* On add Project button click creates new table for tasks */
+
+    $addProjectButton.on('click touchend', function () {
+        $.post({
+            url: "/projects/create-project",
+            contentType: "application/json"
+        }).done(function (data) {
+            let table = createTable(data, 0)
+            $('#mainContentHeader').after(table);
+        }).fail(function (data) {
+            console.log(data)
+        });
+    })
+
+    /* Shows all projects */
+
+    function showProjects(data, e) {
+
+        $.each(data, function (index) {
+
+            let table = createTable(data, index);
 
             $('#mainContentHeader').after(table);
+
+            let timeEstimatedSum = 0;
+            let LowCounter = 0,MediumCounter = 0,HighCounter = 0,DoneCounter = 0,InProgressCounter = 0,StuckCounter = 0;
 
             if (data[index].projectTasks) {
                 let projectTasks = data[index].projectTasks;
                 projectTasks.sort(compareSequence)
-                console.log(projectTasks)
                 $.each(projectTasks, function (taskIndex) {
                     let {choosedPriorityClass, choosedStatusClass} = setStatusAndPriority(projectTasks, taskIndex);
-                    let row = createTaskRow(projectTasks,taskIndex, choosedPriorityClass, choosedStatusClass);
-                    $('#item_' + data[index].sequence + ' tbody').append(row)
-
+                    let row = createTaskRow(projectTasks, taskIndex, choosedPriorityClass, choosedStatusClass);
+                    $('#table_' + data[index].sequence + ' tbody').append(row)
+                    timeEstimatedSum += projectTasks[taskIndex].estimatedTime;
+                    switch (projectTasks[taskIndex].priority) {
+                        case "Low": LowCounter++;break;
+                        case "Medium": MediumCounter++;break;
+                        case "High": HighCounter++;break;
+                    }
+                    switch (projectTasks[taskIndex].status) {
+                        case "Done": DoneCounter++;break;
+                        case "In Progress": InProgressCounter++;break;
+                        case "Stuck": StuckCounter++;break;
+                    }
                 }) /* End of projectTasks Foreach */
 
             }
+
+            showPriorityAndStatusFooter(LowCounter,MediumCounter,HighCounter,DoneCounter,InProgressCounter,StuckCounter,data[index].sequence,false);
+
+            if (timeEstimatedSum !== 0)
+                $('#table_' + data[index].sequence + ' .estimated-time-sum').text(timeEstimatedSum + 'h')
+
+
+
 
         }) /* End of Project Foreach */
 
@@ -202,7 +235,7 @@ $(function () {
     $body.on('click touchend', '.add-task-button', function () {
         let $table = $(this).parents('table');
         let taskTitle = $table.find('.add-task-row-input').val();
-        if(taskTitle.length >= 1) {
+        if (taskTitle.length >= 1) {
             let tableId = $table.attr('id').toString().split('_')[1];
             let ProjectPojo = {
                 taskTitle: taskTitle,
@@ -215,7 +248,7 @@ $(function () {
             }).done(function (data) {
                 let {choosedPriorityClass, choosedStatusClass} = setStatusAndPriority(data, 0);
                 let taskRow = createTaskRow(data, 0, choosedPriorityClass, choosedStatusClass);
-                $('#item_' + tableId + ' tbody').append(taskRow)
+                $('#table_' + tableId + ' tbody').append(taskRow)
             }).fail(function (data) {
                 console.log(data)
             })
@@ -270,7 +303,7 @@ $(function () {
         $(this).focus();
     })
 
-    $body.on('focusout','.task-title', function () {
+    $body.on('focusout', '.task-title', function () {
         let tableRowId = $(this).parent('.table-row').attr('id').split('_')[1];
         let tableId = $(this).parents('table').attr('id').split('_')[1];
         $.ajax({
@@ -298,10 +331,28 @@ $(function () {
         let $timeEstimatedInput = $(this);
         let $timeEstimatedText = $timeEstimatedInput.prev('.time-estimated-text');
         $timeEstimatedText.show()
-        if($timeEstimatedInput.val() !== '')
+        if ($timeEstimatedInput.val() !== '')
             $timeEstimatedText.text($timeEstimatedInput.val() + 'h')
         $timeEstimatedInput.hide()
-        console.log($timeEstimatedInput.val())
+        let taskEstimatedTime = $timeEstimatedInput.val();
+        let tableRowId = $(this).parents('.table-row').attr('id').split('_')[1];
+        let $table = $(this).parents('table');
+        let tableId = $table.attr('id').split('_')[1];
+        let $estimatedTimeSum = $table.find('.estimated-time-sum');
+        $.ajax({
+            url: "projects/edit-project-task-estimated-time",
+            method: "PATCH",
+            contentType: "application/json",
+            data: JSON.stringify({
+                estimatedTime: taskEstimatedTime,
+                tableRowId: tableRowId,
+                tableId: tableId
+            })
+        }).done(function (data) {
+            $estimatedTimeSum.text(data + 'h')
+        }).fail(function (data) {
+            console.log(data)
+        })
     })
 
     function compareSequence(a, b) {
@@ -316,16 +367,16 @@ $(function () {
 
     /* Disable linebreak in contenteditable */
 
-    $body.on('keypress','.task-title[contenteditable], .title-column[contenteditable]',function (evt) {
+    $body.on('keypress', '.task-title[contenteditable], .title-column[contenteditable]', function (evt) {
         let keycode = evt.charCode || evt.keyCode;
-        if (keycode  === 13) { //Enter key's keycode
+        if (keycode === 13) { //Enter key's keycode
             return false;
         }
     })
 
     /* Saves project title change into the database */
 
-    $body.on('focusout','.title-column', function () {
+    $body.on('focusout', '.title-column', function () {
         let tableId = $(this).parents('table').attr('id').split('_')[1];
         $.ajax({
             url: "projects/edit-project-title",
@@ -338,7 +389,7 @@ $(function () {
         })
     });
 
-    /* On Status/Priority select saves the selected option to database */
+    /* On Status/Priority select saves the selected option to database, and also updates the footer data */
 
     $body.on('click touchend', '.table-dropdown-menu button', function () {
         let tableId = $(this).parents('table').attr('id').split('_')[1];
@@ -352,6 +403,10 @@ $(function () {
                 tableId: tableId,
                 tableRowId: tableRowId
             })
+        }).done(function (data) {
+            showPriorityAndStatusFooter(data[0],data[1],data[2],data[3],data[4],data[5],data[6],true)
+        }).fail(function (data) {
+            console.log(data)
         })
     })
 
@@ -373,7 +428,6 @@ $(function () {
         })
     });
 
-
     /* Loads and shows projects from database */
 
     $(window).on('load', function (e) {
@@ -386,6 +440,89 @@ $(function () {
             console.log(data)
         })
     })
+
+    let $tableBin;
+    let $tableRowBinId;
+    let tableBinId;
+    let tableRowBinId;
+    let isProjectBin = false;
+
+    /* Prints modal for delete task */
+
+    $body.on('click', 'table tbody .bin-icon-button', function () {
+        $tableRowBinId = $(this).parent().parent();
+        $tableBin = $tableRowBinId.parent().parent();
+        tableRowBinId = $tableRowBinId.attr('id').split('_')[1];
+        tableBinId = $tableBin.attr('id').split('_')[1];
+        isProjectBin = false;
+        $('#delete-modal').modal();
+    });
+
+    /* Prints modal for delete table */
+
+    $body.on('click', 'table thead .bin-icon-button', function () {
+        $tableBin = $(this).parent().parent().parent().parent();
+        tableBinId = $tableBin.attr('id').split('_')[1];
+        isProjectBin = true;
+        $('#delete-modal').modal();
+    });
+
+
+    /* Deletes the task/project and then lowers the sequence of all items that had higher sequence than deleted item by 1*/
+
+    $('#accept-delete-button').on('click', function () {
+        if (isProjectBin) {
+            $.ajax({
+                url: "projects/delete-project",
+                method: "DELETE",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    tableId: tableBinId
+                })
+            }).done(function () {
+                $('#delete-modal').modal('toggle');
+                $tableBin.remove();
+                $('table').each(function () {
+                    if ($(this).attr('id')) {
+                        if (parseInt($(this).attr('id').toString().split("_")[1]) > tableBinId) {
+                            let thisTableId = parseInt($(this).attr('id').toString().split("_")[1]) - 1;
+                            $(this).attr('id', 'item_' + thisTableId);
+                        }
+                    }
+                })
+            }).fail(function () {
+                console.log("fail")
+            })
+        } else {
+            $.ajax({
+                url: "projects/delete-project-task",
+                method: "DELETE",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    tableId: tableBinId,
+                    tableRowId: tableRowBinId
+                })
+            }).done(function () {
+                $('#delete-modal').modal('toggle');
+                $tableRowBinId.remove();
+                $('#table_' + tableBinId + ' tbody tr').each(function () {
+                    if ($(this).attr('id')) {
+                        if (parseInt($(this).attr('id').toString().split("_")[1]) > tableRowBinId) {
+                            let thisRowId = parseInt($(this).attr('id').toString().split("_")[1]) - 1;
+                            $(this).attr('id', 'item_' + thisRowId);
+                        }
+                    }
+                })
+            }).fail(function () {
+                console.log("fail")
+            })
+        }
+    });
+
+    /* Fills the Priority footer with data */
+
+
+
 
 
 })

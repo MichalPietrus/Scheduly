@@ -60,7 +60,7 @@ public class CalendarRestController {
     public void deleteTaskById(@RequestParam long elementId, Principal principal) {
         long tableRowId = taskService.findTaskById(elementId).getSequence();
         taskService.removeById(elementId);
-        taskService.updateSequenceAfterDelete(tableRowId, principal.getName());
+        taskService.updateAllSequenceAfterDelete(tableRowId, principal.getName());
     }
 
     @PatchMapping("/edit")

@@ -18,5 +18,6 @@ public class ProjectPojo {
     String choosedOption;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date date;
+    int estimatedTime;
 
 }
