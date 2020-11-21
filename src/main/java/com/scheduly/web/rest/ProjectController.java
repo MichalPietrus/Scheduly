@@ -57,7 +57,7 @@ public class ProjectController {
     }
 
     @PostMapping("/add-task")
-    public List<ProjectTask> createProjectTask(@RequestBody ProjectPojo projectPojo, Principal principal) {
+    public List<Object> createProjectTask(@RequestBody ProjectPojo projectPojo, Principal principal) {
         Project project = projectService.findBySequenceAndUserUsername(projectPojo.getTableId(), principal.getName());
         ProjectTask projectTask = new ProjectTask();
         long highestSequence;
@@ -76,8 +76,34 @@ public class ProjectController {
         projectTask.setStatus(Status.IN_PROGRESS);
         project.addProjectTask(projectTask);
         projectTaskService.saveProjectTask(projectTask);
-        List<ProjectTask> list = new ArrayList<>();
+        long LowCounter = 0, MediumCounter = 0, HighCounter = 0, DoneCounter = 0, InProgressCounter = 0, StuckCounter = 0;
+        for (ProjectTask task : project.getProjectTasks()) {
+            switch (task.getPriority()) {
+                case LOW:
+                    LowCounter++;
+                    break;
+                case MEDIUM:
+                    MediumCounter++;
+                    break;
+                case HIGH:
+                    HighCounter++;
+                    break;
+            }
+            switch (task.getStatus()) {
+                case DONE:
+                    DoneCounter++;
+                    break;
+                case IN_PROGRESS:
+                    InProgressCounter++;
+                    break;
+                case STUCK:
+                    StuckCounter++;
+                    break;
+            }
+        }
+        List<Object> list = new ArrayList<>();
         list.add(projectTask);
+        list.add(new long[]{LowCounter, MediumCounter, HighCounter, DoneCounter, InProgressCounter, StuckCounter, project.getSequence()});
         return list;
     }
 
@@ -103,7 +129,7 @@ public class ProjectController {
     /* Updates the dropdown and also sends back data for footer update */
 
     @PatchMapping("/updated-project-task-dropdown-selected-data")
-    public long[] editStatusOrPriority(@RequestBody ProjectPojo projectPojo, Principal principal) {
+    public List<Object> editStatusOrPriority(@RequestBody ProjectPojo projectPojo, Principal principal) {
         Project project = projectService.findBySequenceAndUserUsername(projectPojo.getTableId(), principal.getName());
         String selectedOption = projectPojo.getChoosedOption();
         ProjectTask projectTask = project.getProjectTasks()
@@ -141,7 +167,10 @@ public class ProjectController {
                     break;
             }
         }
-        return new long[]{LowCounter, MediumCounter, HighCounter, DoneCounter, InProgressCounter, StuckCounter, project.getSequence()};
+        List<Object> list = new ArrayList<>();
+        list.add(new long[]{LowCounter, MediumCounter, HighCounter, DoneCounter, InProgressCounter, StuckCounter, project.getSequence()});
+        list.add(projectTask);
+        return list;
     }
 
     @PatchMapping("/update-project-task-date")
@@ -191,6 +220,11 @@ public class ProjectController {
         project.getProjectTasks().remove(projectTask);
         projectTaskService.removeProjectTaskById(projectTask.getId());
         projectTaskService.updateSequenceAfterDelete(projectTask.getSequence(), project.getId());
+    }
+
+    @GetMapping("/search")
+    public List<Project> searchQueries(@RequestParam String keyword, Principal principal) {
+        return projectService.findAllProjectsByKeyword(keyword,principal.getName());
     }
 
 }

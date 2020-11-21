@@ -33,11 +33,6 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project findProjectById(long id) {
-        return projectRepository.findById(id).get();
-    }
-
-    @Override
     public Project findBySequenceAndUserUsername(long sequence, String username) {
         return projectRepository.findBySequenceAndUserUsername(sequence, username);
     }
@@ -54,6 +49,11 @@ public class ProjectServiceImpl implements ProjectService {
             project.setSequence(project.getSequence() - 1);
         }
         projectRepository.saveAll(projects);
+    }
+
+    @Override
+    public List<Project> findAllProjectsByKeyword(String keyword, String username) {
+        return projectRepository.findAllProjectsByKeyword(keyword,username);
     }
 
 

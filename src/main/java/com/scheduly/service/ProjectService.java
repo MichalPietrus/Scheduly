@@ -1,6 +1,7 @@
 package com.scheduly.service;
 
 import com.scheduly.model.Project;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,12 +13,12 @@ public interface ProjectService {
 
     Project findFirstByUserUsernameOrderBySequenceDesc(String username);
 
-    Project findProjectById(long id);
-
     Project findBySequenceAndUserUsername(long sequence, String username);
 
     void removeProject(Project project);
 
     void updateSequenceAfterDelete(long sequenceId, String username);
+
+    List<Project> findAllProjectsByKeyword(String keyword, String username);
 
 }

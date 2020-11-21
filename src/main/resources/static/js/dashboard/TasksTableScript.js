@@ -1,7 +1,3 @@
-function datediff(first, second) {
-    return Math.round((second - first) / (1000 * 60 * 60 * 24));
-}
-
 function showTableTasksElements(data, e) {
     let $tableBody = $('tbody');
     $.each(data, function (index) {
@@ -348,7 +344,6 @@ $(function () {
             $.each(splitData, function (index) {
                 sequenceTable.push(splitData[index].toString().split('=')[1])
             })
-            console.log(sequenceTable)
             let Test = {
                 sequenceTable: sequenceTable
             }

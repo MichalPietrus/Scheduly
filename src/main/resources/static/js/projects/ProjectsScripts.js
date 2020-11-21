@@ -12,6 +12,69 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
+/* Creates or updates date icon and tooltip */
+
+function createOrUpdateDateIconAndDateIconTooltip(data, index,isUpdate,tableId,taskId,isDropdownSelect) {
+    let dateIconTooltip;
+    let dateIcon;
+    let today = new Date();
+    let taskDate;
+    let status;
+    if(!isUpdate) {
+        taskDate = new Date(data[index].date);
+        status = data[index].status;
+    }
+    else if(isDropdownSelect) {
+        taskDate = new Date(data.date);
+        switch (data.status) {
+            case "DONE":
+                status = "Done";
+                break;
+            case "IN_PROGRESS":
+                status = "In Progress";
+                break;
+            case "STUCK":
+                status = "Stuck";
+                break;
+        }
+    }
+    else
+        taskDate = new Date(data)
+
+    if (status === "Done") {
+        dateIconTooltip = "Done";
+        dateIcon = "icon-option-green fa-check-circle";
+    } else {
+        let sum = datediff(today, taskDate);
+        switch (true) {
+            case sum < -1 :
+                dateIconTooltip = -sum + " days overdue"
+                dateIcon = "icon-option-red fa-exclamation-circle";
+                break;
+            case sum > 1 :
+                dateIconTooltip = sum + " days left"
+                dateIcon = "icon-option-orange fa-exclamation-circle";
+                break;
+            case sum === 1 || sum >= 0  :
+                dateIconTooltip = sum + " day left"
+                dateIcon = "icon-option-orange fa-exclamation-circle";
+                break;
+            default :
+                dateIconTooltip = "Today";
+                dateIcon = "icon-option-blue fa-check-circle";
+                break;
+        }
+    }
+
+    if(isUpdate){
+        let $dateIcon = $('#table_' + tableId + ' #item_' + taskId + ' .fas');
+        $dateIcon.attr('data-original-title',dateIconTooltip)
+        $dateIcon.removeClass()
+        $dateIcon.addClass('fas ' + dateIcon)
+    }
+
+    return {dateIconTooltip, dateIcon};
+}
 
 /* Creates and displays a task row */
 
@@ -22,6 +85,7 @@ function createTaskRow(data, index, choosedPriorityClass, choosedStatusClass) {
     if (date) {
         formattedDate = formatDate(date);
     }
+    let {dateIconTooltip, dateIcon} = createOrUpdateDateIconAndDateIconTooltip(data, index,false,0,0,false);
 
     return `
                     <tr class="table-row" id="${'item_' + (data[index].sequence)}">
@@ -65,7 +129,7 @@ function createTaskRow(data, index, choosedPriorityClass, choosedStatusClass) {
                                 </td>
                                 <td class="date-cell">
                                     <span class="icon-span">
-                                        <i class='fas fa-exclamation-triangle'></i>
+                                        <i data-toggle="tooltip" title="${(dateIconTooltip)}" class='fas ${(dateIcon)}'></i>
                                     </span>
                                     <input type="date" value="${formattedDate}" class="date-task-input form-control"/>
                                 </td>
@@ -162,6 +226,7 @@ function showPriorityAndStatusFooter(LowCounter,MediumCounter,HighCounter,DoneCo
         })
 }
 
+
 $(function () {
 
     let $addProjectButton = $('#addProjectButton');
@@ -234,9 +299,11 @@ $(function () {
 
     $body.on('click touchend', '.add-task-button', function () {
         let $table = $(this).parents('table');
-        let taskTitle = $table.find('.add-task-row-input').val();
+        let $taskTitle = $table.find('.add-task-row-input');
+        let taskTitle = $taskTitle.val();
         if (taskTitle.length >= 1) {
             let tableId = $table.attr('id').toString().split('_')[1];
+            $taskTitle.val('');
             let ProjectPojo = {
                 taskTitle: taskTitle,
                 tableId: tableId
@@ -246,12 +313,29 @@ $(function () {
                 contentType: "application/json",
                 data: JSON.stringify(ProjectPojo)
             }).done(function (data) {
-                let {choosedPriorityClass, choosedStatusClass} = setStatusAndPriority(data, 0);
-                let taskRow = createTaskRow(data, 0, choosedPriorityClass, choosedStatusClass);
-                $('#table_' + tableId + ' tbody').append(taskRow)
+                $.each(data, function(index) {
+                    if(index === 0) {
+                        let {choosedPriorityClass, choosedStatusClass} = setStatusAndPriority(data, 0);
+                        let taskRow = createTaskRow(data, 0, choosedPriorityClass, choosedStatusClass);
+                        $('#table_' + tableId + ' tbody').append(taskRow)
+                    } else {
+                        showPriorityAndStatusFooter(data[index][0],data[index][1],data[index][2],data[index][3],data[index][4],data[index][5],data[index][6],true);
+                    }
+                })
             }).fail(function (data) {
                 console.log(data)
             })
+        }
+    });
+
+    /* On add task input 'enter' submit it */
+
+    $body.on('keypress', '.add-task-row-input', function (e) {
+        if(e.keyCode === 13) {
+            e.preventDefault();
+            let $tableRow = $(this).parent().parent();
+            let $addButton = $tableRow.children('.add-task-button-cell').children()
+            $addButton.click();
         }
     });
 
@@ -293,9 +377,6 @@ $(function () {
         let $addTaskRow = $(this).parents('.add-task-row');
         $addTaskRow.removeClass('blue-border')
     })
-
-
-    $('tbody:not(tr:last)').sortable();
 
     /* Task title changes and saves to database on click */
 
@@ -404,7 +485,12 @@ $(function () {
                 tableRowId: tableRowId
             })
         }).done(function (data) {
-            showPriorityAndStatusFooter(data[0],data[1],data[2],data[3],data[4],data[5],data[6],true)
+            $.each(data,function (index) {
+                if(index === 0)
+                    showPriorityAndStatusFooter(data[index][0],data[index][1],data[index][2],data[index][3],data[index][4],data[index][5],data[index][6],true)
+                else
+                    createOrUpdateDateIconAndDateIconTooltip(data[index],0,true,tableId,tableRowId,true)
+            })
         }).fail(function (data) {
             console.log(data)
         })
@@ -425,6 +511,10 @@ $(function () {
                 tableId: tableId,
                 tableRowId: tableRowId
             })
+        }).done(function () {
+            createOrUpdateDateIconAndDateIconTooltip(selectedDate,0,true,tableId,tableRowId,false)
+        }).fail(function (data) {
+            console.log(data)
         })
     });
 
@@ -519,10 +609,44 @@ $(function () {
         }
     });
 
-    /* Fills the Priority footer with data */
 
+    /* Search engine */
 
+    let $search = $('#txtSearch');
+    let $searchSubmitButton = $('#search-button');
+    $search.on('keyup', searchEngine);
+    $searchSubmitButton.on('click submit touchend', searchEngine);
 
+    /* Searches for the element in database by title and also have the autocomplete feature */
 
+    function searchEngine(e) {
+        e.preventDefault();
+        $.get({
+            url: "/projects/search",
+            contentType: "application/json",
+            data: {
+                keyword: $search.val().toString()
+            }
+        }).done(function (data) {
+            let titlesArray = [];
+            $.each(data, function (index) {
+                titlesArray.push(data[index].title)
+            })
+            $search.autocomplete({
+                source: titlesArray
+            });
+            let value = $search.val().toLowerCase();
+            $('body table').each(function () {
+                let projectTitle = $(this).children('thead').children().children('.title-column').text().toLowerCase();
+                if(value === '') {
+                    $(this).show()
+                } else if(projectTitle.toLowerCase().indexOf(value) > -1){
+                    $(this).show()
+                } else {
+                    $(this).hide()
+                }
+            })
+        });
+    }
 
 })
