@@ -6,7 +6,7 @@ Languages and frameworks used in the project:
 - Java
 - Spring boot, Spring Data, Spring MVC, Spring Security, Thymeleaf
 - PostgreSQL, Hibernate
-- HTML, CSS, Javascript, Jquery, Bootstrap, Ajax, JqueryUI
+- Javascript, HTML, CSS, Jquery, Bootstrap, Ajax, JqueryUI
 - Maven
 - Heroku for deployment
 
