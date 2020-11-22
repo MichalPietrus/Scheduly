@@ -1,5 +1,6 @@
 body {
     background-color: #F2F6F8;
+    overflow-x: hidden;
 }
 
 .navbar-brand {
@@ -7,8 +8,12 @@ body {
     font-family: 'Work Sans', sans-serif;
 }
 
-button {
+#navbarSupportedContent {
     float: right;
+}
+
+#loginButton,
+#signUpButton {
     width: 140px;
     margin: 10px;
 }
@@ -34,24 +39,25 @@ button {
 }
 
 #mainContent {
-    margin-top: 75px;
+    margin-top: 100px;
 }
 
 #sitePresentation {
     border: 10px solid black;
     border-radius: 10px;
+    padding: 0;
 }
 
 #getStartedButton {
-    margin-left: 0;
     width: 240px;
     height: 50px;
     border-radius: 40px;
-    float: left;
     font-size: 20px;
     font-weight: 400;
     line-height: 32px;
     font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    justify-self: center;
 }
 
 #page {
@@ -60,7 +66,8 @@ button {
 }
 
 .alert {
-    margin: 0 auto;
+    text-align: center;
+    margin: 25px auto 0;
 }
 
 @media (min-width: 992px) {
@@ -83,9 +90,91 @@ button {
     }
 }
 
-.alert {
-    text-align: center;
-    margin-top: 25px;
+.presentation-video,
+.presentation-video:focus {
+    width: 100%;
+    height: 100%;
+    outline: none;
 }
 
+.phone-desktop-container {
+    margin-top: 280px;
+    margin-right: 0;
+    margin-left: 0;
+    background-color: #f7fcff
+}
+#sitePresentation,
+#shortText{
+    margin: 0 auto;
+    text-align: center;
+}
+#shortText {
+    align-self: center;
+    margin-bottom: 25px!important;
+}
 
+.why-scheduly-container {
+
+}
+
+.why-scheduly-container > h1 {
+    margin: 0 auto;
+    padding-top: 75px;
+    padding-bottom: 75px;
+    text-align: center;
+}
+
+.project-presentation-container,
+.dashboard-presentation-container {
+    border: 10px solid black;
+    border-radius: 10px;
+    padding: 0;
+}
+
+.presentation-description {
+    font-size: 30px;
+    line-height: 60px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    align-self: center;
+    margin-bottom: 0;
+    color: white;
+}
+
+.dashboard-presentation-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.project-img {
+    padding: 0;
+}
+
+@media (max-width: 1070px) {
+    .presentation-description {
+        font-size: 24px;
+        line-height: 50px;
+    }
+}
+
+@media (max-width: 900px) {
+    .presentation-description {
+        font-size: 20px;
+        line-height: 40px;
+    }
+}
+
+@media (max-width: 700px) {
+    .presentation-description {
+        font-size: 16px;
+        line-height: 30px;
+    }
+}
+
+@media (max-width: 410px) {
+    .presentation-description {
+        font-size: 12px;
+        line-height: 20px;
+    }
+}

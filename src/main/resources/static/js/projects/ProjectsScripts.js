@@ -14,17 +14,16 @@ function formatDate(date) {
 
 /* Creates or updates date icon and tooltip */
 
-function createOrUpdateDateIconAndDateIconTooltip(data, index,isUpdate,tableId,taskId,isDropdownSelect) {
+function createOrUpdateDateIconAndDateIconTooltip(data, index, isUpdate, tableId, taskId, isDropdownSelect) {
     let dateIconTooltip;
     let dateIcon;
     let today = new Date();
     let taskDate;
     let status;
-    if(!isUpdate) {
+    if (!isUpdate) {
         taskDate = new Date(data[index].date);
         status = data[index].status;
-    }
-    else if(isDropdownSelect) {
+    } else if (isDropdownSelect) {
         taskDate = new Date(data.date);
         switch (data.status) {
             case "DONE":
@@ -37,8 +36,7 @@ function createOrUpdateDateIconAndDateIconTooltip(data, index,isUpdate,tableId,t
                 status = "Stuck";
                 break;
         }
-    }
-    else
+    } else
         taskDate = new Date(data)
 
     if (status === "Done") {
@@ -66,9 +64,9 @@ function createOrUpdateDateIconAndDateIconTooltip(data, index,isUpdate,tableId,t
         }
     }
 
-    if(isUpdate){
+    if (isUpdate) {
         let $dateIcon = $('#table_' + tableId + ' #item_' + taskId + ' .fas');
-        $dateIcon.attr('data-original-title',dateIconTooltip)
+        $dateIcon.attr('data-original-title', dateIconTooltip)
         $dateIcon.removeClass()
         $dateIcon.addClass('fas ' + dateIcon)
     }
@@ -85,7 +83,7 @@ function createTaskRow(data, index, choosedPriorityClass, choosedStatusClass) {
     if (date) {
         formattedDate = formatDate(date);
     }
-    let {dateIconTooltip, dateIcon} = createOrUpdateDateIconAndDateIconTooltip(data, index,false,0,0,false);
+    let {dateIconTooltip, dateIcon} = createOrUpdateDateIconAndDateIconTooltip(data, index, false, 0, 0, false);
 
     return `
                     <tr class="table-row" id="${'item_' + (data[index].sequence)}">
@@ -184,30 +182,29 @@ function createTable(data, index) {
             `;
 }
 
-function showPriorityAndStatusFooter(LowCounter,MediumCounter,HighCounter,DoneCounter,InProgressCounter,StuckCounter,tableSequence,isUpdate) {
+function showPriorityAndStatusFooter(LowCounter, MediumCounter, HighCounter, DoneCounter, InProgressCounter, StuckCounter, tableSequence, isUpdate) {
     let totalPriorityCounter = LowCounter + MediumCounter + HighCounter;
     let totalStatusCounter = DoneCounter + InProgressCounter + StuckCounter;
-    LowCounter = LowCounter/totalPriorityCounter * 100;
-    MediumCounter = MediumCounter/totalPriorityCounter * 100;
-    HighCounter = HighCounter/totalPriorityCounter * 100;
-    DoneCounter = DoneCounter/totalStatusCounter * 100;
-    InProgressCounter = InProgressCounter/totalStatusCounter * 100;
-    StuckCounter = StuckCounter/totalStatusCounter * 100;
-        let priorityFooterDiv = `
+    LowCounter = LowCounter / totalPriorityCounter * 100;
+    MediumCounter = MediumCounter / totalPriorityCounter * 100;
+    HighCounter = HighCounter / totalPriorityCounter * 100;
+    DoneCounter = DoneCounter / totalStatusCounter * 100;
+    InProgressCounter = InProgressCounter / totalStatusCounter * 100;
+    StuckCounter = StuckCounter / totalStatusCounter * 100;
+    let priorityFooterDiv = `
                         <div style="height: 100%;width: 80%;margin: 0 auto">
                             <div class="option-pink footer-cell" title="${(LowCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(LowCounter)}%"></div>
                             <div class="option-blue footer-cell" title="${(MediumCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(MediumCounter)}%"></div>
                             <div class="option-purple footer-cell" title="${(HighCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(HighCounter)}%"></div>
                         </div>
         `
-        if(!isUpdate)
-            $('#table_' + tableSequence + ' tfoot tr .priority-footer-cell').append(priorityFooterDiv)
-        else
-            $('#table_' + tableSequence + ' tfoot tr .priority-footer-cell').html(priorityFooterDiv);
+    if (!isUpdate)
+        $('#table_' + tableSequence + ' tfoot tr .priority-footer-cell').append(priorityFooterDiv)
+    else
+        $('#table_' + tableSequence + ' tfoot tr .priority-footer-cell').html(priorityFooterDiv);
 
 
-
-        let statusFooterDiv = `
+    let statusFooterDiv = `
                         <div style="height: 100%;width: 80%;margin: 0 auto">
                             <div class="option-green footer-cell" title="${(DoneCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(DoneCounter)}%"></div>
                             <div class="option-orange footer-cell" title="${(InProgressCounter.toFixed())}%" data-toggle="tooltip" style="width: ${(InProgressCounter)}%"></div>
@@ -215,15 +212,15 @@ function showPriorityAndStatusFooter(LowCounter,MediumCounter,HighCounter,DoneCo
                         </div>
         `
 
-        if(!isUpdate)
-            $('#table_' + tableSequence + ' tfoot tr .status-footer-cell').append(statusFooterDiv)
-        else
-            $('#table_' + tableSequence + ' tfoot tr .status-footer-cell').html(statusFooterDiv);
+    if (!isUpdate)
+        $('#table_' + tableSequence + ' tfoot tr .status-footer-cell').append(statusFooterDiv)
+    else
+        $('#table_' + tableSequence + ' tfoot tr .status-footer-cell').html(statusFooterDiv);
 
 
-        $('[data-toggle="tooltip"]').tooltip({
-            position: 'top',
-        })
+    $('[data-toggle="tooltip"]').tooltip({
+        position: 'top',
+    })
 }
 
 
@@ -257,7 +254,8 @@ $(function () {
             $('#mainContentHeader').after(table);
 
             let timeEstimatedSum = 0;
-            let LowCounter = 0,MediumCounter = 0,HighCounter = 0,DoneCounter = 0,InProgressCounter = 0,StuckCounter = 0;
+            let LowCounter = 0, MediumCounter = 0, HighCounter = 0, DoneCounter = 0, InProgressCounter = 0,
+                StuckCounter = 0;
 
             if (data[index].projectTasks) {
                 let projectTasks = data[index].projectTasks;
@@ -268,25 +266,35 @@ $(function () {
                     $('#table_' + data[index].sequence + ' tbody').append(row)
                     timeEstimatedSum += projectTasks[taskIndex].estimatedTime;
                     switch (projectTasks[taskIndex].priority) {
-                        case "Low": LowCounter++;break;
-                        case "Medium": MediumCounter++;break;
-                        case "High": HighCounter++;break;
+                        case "Low":
+                            LowCounter++;
+                            break;
+                        case "Medium":
+                            MediumCounter++;
+                            break;
+                        case "High":
+                            HighCounter++;
+                            break;
                     }
                     switch (projectTasks[taskIndex].status) {
-                        case "Done": DoneCounter++;break;
-                        case "In Progress": InProgressCounter++;break;
-                        case "Stuck": StuckCounter++;break;
+                        case "Done":
+                            DoneCounter++;
+                            break;
+                        case "In Progress":
+                            InProgressCounter++;
+                            break;
+                        case "Stuck":
+                            StuckCounter++;
+                            break;
                     }
                 }) /* End of projectTasks Foreach */
 
             }
 
-            showPriorityAndStatusFooter(LowCounter,MediumCounter,HighCounter,DoneCounter,InProgressCounter,StuckCounter,data[index].sequence,false);
+            showPriorityAndStatusFooter(LowCounter, MediumCounter, HighCounter, DoneCounter, InProgressCounter, StuckCounter, data[index].sequence, false);
 
             if (timeEstimatedSum !== 0)
                 $('#table_' + data[index].sequence + ' .estimated-time-sum').text(timeEstimatedSum + 'h')
-
-
 
 
         }) /* End of Project Foreach */
@@ -313,13 +321,13 @@ $(function () {
                 contentType: "application/json",
                 data: JSON.stringify(ProjectPojo)
             }).done(function (data) {
-                $.each(data, function(index) {
-                    if(index === 0) {
+                $.each(data, function (index) {
+                    if (index === 0) {
                         let {choosedPriorityClass, choosedStatusClass} = setStatusAndPriority(data, 0);
                         let taskRow = createTaskRow(data, 0, choosedPriorityClass, choosedStatusClass);
                         $('#table_' + tableId + ' tbody').append(taskRow)
                     } else {
-                        showPriorityAndStatusFooter(data[index][0],data[index][1],data[index][2],data[index][3],data[index][4],data[index][5],data[index][6],true);
+                        showPriorityAndStatusFooter(data[index][0], data[index][1], data[index][2], data[index][3], data[index][4], data[index][5], data[index][6], true);
                     }
                 })
             }).fail(function (data) {
@@ -331,7 +339,7 @@ $(function () {
     /* On add task input 'enter' submit it */
 
     $body.on('keypress', '.add-task-row-input', function (e) {
-        if(e.keyCode === 13) {
+        if (e.keyCode === 13) {
             e.preventDefault();
             let $tableRow = $(this).parent().parent();
             let $addButton = $tableRow.children('.add-task-button-cell').children()
@@ -485,11 +493,11 @@ $(function () {
                 tableRowId: tableRowId
             })
         }).done(function (data) {
-            $.each(data,function (index) {
-                if(index === 0)
-                    showPriorityAndStatusFooter(data[index][0],data[index][1],data[index][2],data[index][3],data[index][4],data[index][5],data[index][6],true)
+            $.each(data, function (index) {
+                if (index === 0)
+                    showPriorityAndStatusFooter(data[index][0], data[index][1], data[index][2], data[index][3], data[index][4], data[index][5], data[index][6], true)
                 else
-                    createOrUpdateDateIconAndDateIconTooltip(data[index],0,true,tableId,tableRowId,true)
+                    createOrUpdateDateIconAndDateIconTooltip(data[index], 0, true, tableId, tableRowId, true)
             })
         }).fail(function (data) {
             console.log(data)
@@ -512,7 +520,7 @@ $(function () {
                 tableRowId: tableRowId
             })
         }).done(function () {
-            createOrUpdateDateIconAndDateIconTooltip(selectedDate,0,true,tableId,tableRowId,false)
+            createOrUpdateDateIconAndDateIconTooltip(selectedDate, 0, true, tableId, tableRowId, false)
         }).fail(function (data) {
             console.log(data)
         })
@@ -638,9 +646,9 @@ $(function () {
             let value = $search.val().toLowerCase();
             $('body table').each(function () {
                 let projectTitle = $(this).children('thead').children().children('.title-column').text().toLowerCase();
-                if(value === '') {
+                if (value === '') {
                     $(this).show()
-                } else if(projectTitle.toLowerCase().indexOf(value) > -1){
+                } else if (projectTitle.toLowerCase().indexOf(value) > -1) {
                     $(this).show()
                 } else {
                     $(this).hide()

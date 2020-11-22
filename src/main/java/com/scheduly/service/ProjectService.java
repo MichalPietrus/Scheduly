@@ -1,7 +1,6 @@
 package com.scheduly.service;
 
 import com.scheduly.model.Project;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 

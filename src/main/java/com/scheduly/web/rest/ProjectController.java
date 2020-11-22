@@ -224,7 +224,7 @@ public class ProjectController {
 
     @GetMapping("/search")
     public List<Project> searchQueries(@RequestParam String keyword, Principal principal) {
-        return projectService.findAllProjectsByKeyword(keyword,principal.getName());
+        return projectService.findAllProjectsByKeyword(keyword, principal.getName());
     }
 
 }

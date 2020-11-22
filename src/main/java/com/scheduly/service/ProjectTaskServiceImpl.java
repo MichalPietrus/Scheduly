@@ -2,7 +2,6 @@ package com.scheduly.service;
 
 import com.scheduly.enums.Priority;
 import com.scheduly.enums.Status;
-import com.scheduly.model.Project;
 import com.scheduly.model.ProjectTask;
 import com.scheduly.repository.ProjectTaskRepository;
 import org.springframework.stereotype.Service;
@@ -62,8 +61,8 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
 
     @Override
     public void updateSequenceAfterDelete(long sequenceId, long projectId) {
-        List<ProjectTask> projectTaskList = projectTaskRepository.findAllBySequenceGreaterThanAndProjectId(sequenceId,projectId);
-        for(ProjectTask projectTask: projectTaskList) {
+        List<ProjectTask> projectTaskList = projectTaskRepository.findAllBySequenceGreaterThanAndProjectId(sequenceId, projectId);
+        for (ProjectTask projectTask : projectTaskList) {
             projectTask.setSequence(projectTask.getSequence() - 1);
         }
         projectTaskRepository.saveAll(projectTaskList);

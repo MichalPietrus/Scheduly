@@ -1,7 +1,6 @@
 package com.scheduly.service;
 
 import com.scheduly.model.Project;
-import com.scheduly.model.Task;
 import com.scheduly.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +43,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void updateSequenceAfterDelete(long sequenceId, String username) {
-        List<Project> projects = projectRepository.findAllBySequenceGreaterThanAndUserUsername(sequenceId,username);
-        for(Project project: projects) {
+        List<Project> projects = projectRepository.findAllBySequenceGreaterThanAndUserUsername(sequenceId, username);
+        for (Project project : projects) {
             project.setSequence(project.getSequence() - 1);
         }
         projectRepository.saveAll(projects);
@@ -53,7 +52,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> findAllProjectsByKeyword(String keyword, String username) {
-        return projectRepository.findAllProjectsByKeyword(keyword,username);
+        return projectRepository.findAllProjectsByKeyword(keyword, username);
     }
 
 

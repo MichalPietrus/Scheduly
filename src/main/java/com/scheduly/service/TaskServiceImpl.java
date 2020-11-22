@@ -95,13 +95,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> findAllBySequenceGreaterThanAndUserUsername(long sequenceId, String username) {
-        return taskRepository.findAllBySequenceGreaterThanAndUserUsername(sequenceId,username);
+        return taskRepository.findAllBySequenceGreaterThanAndUserUsername(sequenceId, username);
     }
 
     @Override
     public void updateAllSequenceAfterDelete(long sequenceId, String username) {
-        List<Task> tasks = findAllBySequenceGreaterThanAndUserUsername(sequenceId,username);
-        for(Task task: tasks) {
+        List<Task> tasks = findAllBySequenceGreaterThanAndUserUsername(sequenceId, username);
+        for (Task task : tasks) {
             task.setSequence(task.getSequence() - 1);
         }
         taskRepository.saveAll(tasks);

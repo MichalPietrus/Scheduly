@@ -331,7 +331,7 @@ tbody tr:not(:last-child) {
 }
 
 .estimated-time-sum {
-    padding-top: 8px!important;
+    padding-top: 8px !important;
     text-align: center;
     height: 35px;
     background-color: rgb(245, 246, 248);
@@ -350,14 +350,16 @@ tbody tr:not(:last-child) {
 #accept-delete-button {
     background-color: rgb(230, 90, 63);
 }
+
 .priority-footer-cell,
 .status-footer-cell {
     background-color: rgb(245, 246, 248);
     height: 40px;
     max-height: 40px;
-    padding-top: 6px!important;
-    padding-bottom: 6px!important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
 }
+
 .footer-cell {
     height: 100%;
     float: left
