@@ -231,7 +231,7 @@ $(function () {
 
     /* On add Project button click creates new table for tasks */
 
-    $addProjectButton.on('click touchend', function () {
+    $addProjectButton.on('click', function () {
         $.post({
             url: "/projects/create-project",
             contentType: "application/json"
@@ -305,7 +305,7 @@ $(function () {
 
     /* Adds and displays task on add task button click */
 
-    $body.on('click touchend', '.add-task-button', function () {
+    $body.on('click', '.add-task-button', function () {
         let $table = $(this).parents('table');
         let $taskTitle = $table.find('.add-task-row-input');
         let taskTitle = $taskTitle.val();
@@ -480,7 +480,7 @@ $(function () {
 
     /* On Status/Priority select saves the selected option to database, and also updates the footer data */
 
-    $body.on('click touchend', '.table-dropdown-menu button', function () {
+    $body.on('click', '.table-dropdown-menu button', function () {
         let tableId = $(this).parents('table').attr('id').split('_')[1];
         let tableRowId = $(this).parents('.table-row').attr('id').split('_')[1];
         $.ajax({
@@ -623,7 +623,7 @@ $(function () {
     let $search = $('#txtSearch');
     let $searchSubmitButton = $('#search-button');
     $search.on('keyup', searchEngine);
-    $searchSubmitButton.on('click submit touchend', searchEngine);
+    $searchSubmitButton.on('click submit', searchEngine);
 
     /* Searches for the element in database by title and also have the autocomplete feature */
 

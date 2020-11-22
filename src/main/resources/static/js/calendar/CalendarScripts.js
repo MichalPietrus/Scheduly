@@ -78,7 +78,7 @@ $(document).ready(function () {
 
     /* Edits task */
 
-    $editTaskButton.on('click submit touchend', function (e) {
+    $editTaskButton.on('click submit', function (e) {
         let priorityChecked = $priorityDropdownButton.text().toString().trim().toUpperCase() === ('PRIORITY' || '');
         let statusChecked = $statusDropdownButton.text().toString().trim().toUpperCase() === ('STATUS' || '');
         let elementId = $('#addTaskForm').data('elementId');
@@ -129,14 +129,14 @@ $(document).ready(function () {
 
     /* Shows delete modal confirmation container */
 
-    $deleteTaskButton.on('click submit touchend', function (e) {
+    $deleteTaskButton.on('click submit', function (e) {
         $('#delete-task-modal').modal();
         e.preventDefault();
     });
 
     /* Deletes task */
 
-    $acceptDeleteButton.on('click submit touchend', function () {
+    $acceptDeleteButton.on('click submit', function () {
         let elementId = $('#addTaskForm').data('elementId');
         $.ajax({
             url: "/calendar/delete-task",
@@ -156,7 +156,7 @@ $(document).ready(function () {
 
     /* Add task */
 
-    $('.create-task-button-calendar').on('click submit touchstart', function (e) {
+    $('.create-task-button-calendar').on('click submit', function (e) {
         let $taskTitle = $('#taskTitle').val();
         let $fromDate = $('#fromDate').val();
         let $toDate = $('#toDate').val()

@@ -264,7 +264,7 @@ $(function () {
     let $search = $('#txtSearch');
     let $searchSubmitButton = $('#search-button');
     $search.on('keyup', searchEngine);
-    $searchSubmitButton.on('click submit touchend', searchEngine);
+    $searchSubmitButton.on('click submit', searchEngine);
 
     /* Searches for the element in database by title and also have the autocomplete feature */
 

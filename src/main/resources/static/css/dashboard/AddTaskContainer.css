@@ -316,3 +316,13 @@ form .form-control:focus {
 .option-purple {
     background-color: rgb(120, 75, 209) !important;
 }
+
+@media (max-height: 700px) {
+    .fadein-container {
+        height: 400px;
+        overflow-y: scroll;
+    }
+    .fadein-container::-webkit-scrollbar {
+        display: none;
+    }
+}

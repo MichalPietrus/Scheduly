@@ -75,3 +75,9 @@
         min-width: 400px;
     }
 }
+
+@media (max-height: 700px) {
+    .fadein-container {
+        position: absolute;
+    }
+}

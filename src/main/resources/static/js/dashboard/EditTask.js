@@ -31,7 +31,7 @@ $(function () {
 
     /* On edit fills the field with data from database and displays the edit task container */
 
-    $tbody.on('click touchend', '.edit-icon-button', function () {
+    $tbody.on('click', '.edit-icon-button', function () {
         tableRowId = $(this).parents('tr').attr('id').toString().split('_')[1];
         let $fadeinContainer = $('.fadein-container');
         let $overlay = $('#overlay');
@@ -97,7 +97,7 @@ $(function () {
     });
 
 
-    $editTaskButton.on('click submit touchend', function (e) {
+    $editTaskButton.on('click submit', function (e) {
         let priorityChecked = $priorityDropdownButton.text().toString().trim().toUpperCase() === ('PRIORITY' || '');
         let statusChecked = $statusDropdownButton.text().toString().trim().toUpperCase() === ('STATUS' || '');
         if ($(this).closest('form')[0].checkValidity() && '' !== $taskTitle.val()
@@ -129,12 +129,12 @@ $(function () {
         }
     })
 
-    $deleteTaskButton.on('click submit touchend', function (e) {
+    $deleteTaskButton.on('click submit', function (e) {
         $('#delete-task-modal').modal();
         e.preventDefault();
     });
 
-    $acceptDeleteButton.on('click submit touchend', function () {
+    $acceptDeleteButton.on('click submit', function () {
         $.ajax({
             url: "/task/delete-task",
             method: "DELETE",

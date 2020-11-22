@@ -16,14 +16,14 @@ $(function () {
     let $addTaskButton = $('#addTaskButton');
     let $fadeinContainer = $('.fadein-container');
     let $overlay = $('#overlay');
-    $addTaskButton.on('click touchstart', function (e) {
+    $addTaskButton.on('click', function (e) {
         let $priorityDropdownButton = $('#priorityDropdownButton');
         let $statusDropdownButton = $('#statusDropdownButton');
         $('#fromDate').val('');
         $('#toDate').val('');
         showAddTaskForm($priorityDropdownButton, $statusDropdownButton)
     });
-    $('body').on('mousedown touchstart', function (e) {
+    $('body').on('mousedown', function (e) {
         let $descriptionContainer = $('.description-container');
         let isAddTaskButton = e.target.id !== $addTaskButton.attr('id');
         let isFadeInContainer = e.target.id !== $fadeinContainer.attr('id');
@@ -81,7 +81,7 @@ $(function () {
 */
 
 $(function () {
-    $('.create-task-button-dashboard').on('click submit touchstart', function (e) {
+    $('.create-task-button-dashboard').on('click submit', function (e) {
         let $taskTitle = $('#taskTitle').val();
         let $fromDate = $('#fromDate').val();
         let $toDate = $('#toDate').val()
