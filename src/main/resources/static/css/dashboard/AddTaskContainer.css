@@ -147,34 +147,6 @@ form .form-control:focus {
     margin: 10px 0 10px 10px;
 }
 
-@media (max-width: 458px) {
-    #priority, #status {
-        width: 90%;
-        padding-top: 5px;
-        border-top: rgb(238, 238, 238) 1px solid;
-    }
-
-    .fadein-form-label,
-    .input-group-prepend,
-    .input-group-text {
-        border-bottom: 0;
-    }
-}
-
-@media (min-width: 458px) {
-    #priority,
-    #status {
-        border-bottom: rgb(238, 238, 238) 1px solid;
-    }
-}
-
-@media (min-width: 1200px) and (max-width: 1520px) {
-    .fadein-container, .description-container {
-        width: 400px;
-        max-width: 400px;
-    }
-}
-
 .description-container {
     margin-top: 50px;
     position: fixed;
@@ -324,5 +296,37 @@ form .form-control:focus {
     }
     .fadein-container::-webkit-scrollbar {
         display: none;
+    }
+}
+
+@media (max-width: 458px) {
+    #priority, #status {
+        width: 90%;
+        padding-top: 5px;
+        border-top: rgb(238, 238, 238) 1px solid;
+    }
+
+    #fromDate,#toDate {
+        width: 100%;
+    }
+
+    .fadein-form-label,
+    .input-group-prepend,
+    .input-group-text {
+        border-bottom: 0;
+    }
+}
+
+@media (min-width: 458px) {
+    #priority,
+    #status {
+        border-bottom: rgb(238, 238, 238) 1px solid;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1520px) {
+    .fadein-container, .description-container {
+        width: 400px;
+        max-width: 400px;
     }
 }

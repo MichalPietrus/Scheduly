@@ -113,9 +113,6 @@ body {
     margin-bottom: 25px!important;
 }
 
-.why-scheduly-container {
-
-}
 
 .why-scheduly-container > h1 {
     margin: 0 auto;
@@ -176,5 +173,19 @@ body {
     .presentation-description {
         font-size: 12px;
         line-height: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    #loginButton,
+    #signUpButton {
+        width: 120px!important;
+        margin: 10px;
+    }
+    #loginButton {
+        margin-left: 0;
+    }
+    #signUpButton {
+        margin-right: 0;
     }
 }
