@@ -10,9 +10,6 @@ Languages and frameworks used in the project:
 - Maven
 - Heroku for deployment
 
-Known bugs:
-- Firefox and opera sometimes dont load up data properly
-
 Link to the site/project:
 
 https://schedulyfy.herokuapp.com/
