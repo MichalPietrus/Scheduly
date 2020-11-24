@@ -10,6 +10,11 @@ Languages and frameworks used in the project:
 - Maven
 - Heroku for deployment
 
+Things i learned on this project :
+- Consolidated my knowledge of java and Spring
+- Consolidated my knowledge of Hibernate
+- Learned Alot of Javascipt, CSS, Ajax and Jquery
+
 Link to the site/project:
 
 https://schedulyfy.herokuapp.com/
