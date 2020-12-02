@@ -13,7 +13,7 @@ Languages and frameworks used in the project:
 Things i learned on this project :
 - Consolidated my knowledge of java and Spring
 - Consolidated my knowledge of Hibernate
-- Learned Alot of Javascipt, CSS, Ajax and Jquery
+- Learned Alot about Javascipt, CSS, Ajax and Jquery
 
 Link to the site/project:
 
